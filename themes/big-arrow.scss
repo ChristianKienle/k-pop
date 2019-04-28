@@ -1,0 +1,86 @@
+$arrow-width: 10px;
+$arrow-color: white;
+
+.vppopper__body--theme-big-arrow {
+  width: auto;
+  background-color: #ffffff;
+  color: #777777  ;
+  padding: 1rem;
+  display: inline-block;
+  border-radius: 4px;
+  position: absolute;
+  font-size: 14px;
+  border: 0px solid #ebeef5;
+  z-index: 200000;
+  font-family: sans-serif;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+}
+
+.vppopper__body--theme-big-arrow[x-out-of-boundaries] {
+  display: none;
+}
+
+.vppopper__body--theme-big-arrow
+.vppopper__arrow--theme-big-arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+  margin: 8px;
+  // filter: drop-shadow(0 2px (#{$arrow-width} + 5px) rgba(0,0,0,.5));
+}
+
+.vppopper__body--theme-big-arrow[x-placement^="top"] {
+  margin-bottom: #{$arrow-width};
+}
+
+.vppopper__body--theme-big-arrow[x-placement^="top"]
+.vppopper__arrow--theme-big-arrow {
+  border-width: #{$arrow-width} #{$arrow-width} 0 #{$arrow-width};
+  border-color: #{$arrow-color} transparent transparent transparent;
+  bottom: -#{$arrow-width};
+  left: calc(50% - #{$arrow-width});
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.vppopper__body--theme-big-arrow[x-placement^="bottom"] {
+  margin-top: #{$arrow-width};
+}
+
+.vppopper__body--theme-big-arrow[x-placement^="bottom"]
+.vppopper__arrow--theme-big-arrow {
+  border-width: 0 #{$arrow-width} #{$arrow-width} #{$arrow-width};
+  border-color: transparent transparent #{$arrow-color} transparent;
+  top: -#{$arrow-width};
+  left: calc(50% - #{$arrow-width});
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.vppopper__body--theme-big-arrow[x-placement^="right"] {
+  margin-left: #{$arrow-width};
+}
+.vppopper__body--theme-big-arrow[x-placement^="right"]
+.vppopper__arrow--theme-big-arrow {
+  border-width: #{$arrow-width} #{$arrow-width} #{$arrow-width} 0;
+  border-color: transparent #{$arrow-color} transparent transparent;
+  left: -#{$arrow-width};
+  top: calc(50% - #{$arrow-width});
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.vppopper__body--theme-big-arrow[x-placement^="left"] {
+  margin-right: #{$arrow-width};
+}
+
+.vppopper__body--theme-big-arrow[x-placement^="left"]
+.vppopper__arrow--theme-big-arrow {
+  border-width: #{$arrow-width} 0 #{$arrow-width} #{$arrow-width};
+  border-color: transparent transparent transparent #{$arrow-color};
+  right: -#{$arrow-width};
+  top: calc(50% - #{$arrow-width});
+  margin-left: 0;
+  margin-right: 0;
+}

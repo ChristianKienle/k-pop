@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://unpkg.com/@ckienle/k-pop@0.1.2/themes/clean.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/@linusborg/vue-simple-portal@0.1.1/dist/index.umd.min.js"></script>
+    <script src="index.umd.js"></script>
+    <title>vue-popper</title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but vue-popper doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+
+    <div id="app"></div>
+
+    <script>
+      const KPop = window.KPop;
+      const App = {
+        template: `
+          <div style="padding: 3rem;">
+            <KPop theme="clean" placement="right"><button slot="trigger">Show</button>Hello From KPop</KPop>
+          </div>
+        `,
+      };
+      new Vue(App).$mount("#app")
+    </script>
+  </body>
+</html>
