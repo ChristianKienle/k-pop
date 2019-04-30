@@ -1,7 +1,7 @@
 
 /**
  * k-pop
- * version: 0.1.5,
+ * version: 0.1.7,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
@@ -264,7 +264,7 @@ var script = {
     this.destroyPopperInstance();
 
     if (!this.hasCustomTriggerLogic) {
-      this.elements().rigger.removeEventListener("click", this.toggle, false);
+      this.elements().trigger.removeEventListener("click", this.toggle, false);
     }
   },
   mounted: function () {
@@ -332,19 +332,6 @@ var script = {
       this.setVisible(true);
     },
     hide: function hide(event) {
-      if (event != null) {
-        var target = event.target;
-
-        var _this$elements = this.elements(),
-            trigger = _this$elements.trigger;
-
-        var targetsReference = reference.contains(target);
-
-        if (targetsReference) {
-          return;
-        }
-      }
-
       this.setVisible(false);
     },
     toggle: function toggle() {

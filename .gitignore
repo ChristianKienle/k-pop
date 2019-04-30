@@ -3,7 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=macos,vue,js,vscode
 
 #!! ERROR: js is undefined. Use list command to see defined gitignore types !!#
-
+coverage
 ### macOS ###
 # General
 .DS_Store

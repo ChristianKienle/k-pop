@@ -1,7 +1,7 @@
 <template>
   <div>
     <vp-trigger ref="trigger">
-    <slot name="trigger" :show="show" :hide="hide" :toggle="toggle"/>
+      <slot name="trigger" :show="show" :hide="hide" :toggle="toggle" />
     </vp-trigger>
     <Portal>
       <transition name="fade">
@@ -11,7 +11,7 @@
           ref="body"
           :aria-hidden="String(!visible_)"
         >
-          <slot :show="show" :hide="hide" :toggle="toggle"/>
+          <slot :show="show" :hide="hide" :toggle="toggle" />
           <vp-arrow
             x-arrow
             :class="arrowClasses"
@@ -134,7 +134,7 @@ export default {
   beforeDestroy() {
     this.destroyPopperInstance();
     if (!this.hasCustomTriggerLogic) {
-      this.elements().rigger.removeEventListener("click", this.toggle, false);
+      this.elements().trigger.removeEventListener("click", this.toggle, false);
     }
   },
   async mounted() {
@@ -176,14 +176,6 @@ export default {
       this.setVisible(true);
     },
     hide(event) {
-      if (event != null) {
-        const { target } = event;
-        const { trigger } = this.elements();
-        const targetsReference = reference.contains(target);
-        if (targetsReference) {
-          return;
-        }
-      }
       this.setVisible(false);
     },
     toggle() {

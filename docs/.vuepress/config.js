@@ -30,6 +30,7 @@ module.exports = {
     nav: [
       {text: 'Home', link: '/'},
       {text: 'Guide', link: '/guide/'},
+      {text: 'Examples', link: '/examples/'},
       {text: 'GitHub', link: 'https://github.com/ChristianKienle/k-pop'},
     ],
     repo: 'christiankienle/k-pop',

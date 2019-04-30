@@ -7,7 +7,7 @@ title: Guide
 [![npm version](https://badge.fury.io/js/%40ckienle%2Fk-pop.svg)](https://badge.fury.io/js/%40ckienle%2Fk-pop)
 [![Minified Size](https://badgen.net/bundlephobia/min/@ckienle/k-pop)](https://bundlephobia.com/result?p=@ckienle/k-pop)
 [![Minzipped Size](https://badgen.net/bundlephobia/minzip/@ckienle/k-pop)](https://bundlephobia.com/result?p=@ckienle/k-pop)
-[![Build Status](https://api.travis-ci.com/ChristianKienle/k-pop.png?branch=master)](https://travis-ci.org/ChristianKienle/k-pop)
+[![Build Status](https://travis-ci.org/ChristianKienle/k-pop.svg?branch=master)](https://travis-ci.org/ChristianKienle/k-pop)
 
 # {{ $page.lib }}
 

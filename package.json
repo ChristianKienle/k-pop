@@ -1,6 +1,6 @@
 {
   "name": "k-pop",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "private": true,
   "scripts": {
     "build:and:release": "npm run build && cd package && npm publish",
