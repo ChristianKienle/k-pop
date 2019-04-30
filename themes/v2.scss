@@ -1,0 +1,17 @@
+@import './mixins';
+
+$bg-color: #fff;
+$border-color: #f1f3f8;
+$arrow-border-color: darken($border-color, 5%);
+
+@include kp-theme(
+  $name: 'v2',
+  $body-padding: 15px,
+  $body-bg-color: $bg-color,
+  $body-border-color: $border-color,
+  $body-border-radius: 5px,
+  $body-shadow: 0 0 10px 3px rgba(0, 0, 0, .12),
+  $arrow-width: 15px,
+  $arrow-color: $bg-color,
+  $arrow-border-color: $arrow-border-color
+);

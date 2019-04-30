@@ -1,0 +1,8 @@
+files:
+  include: 'themes/*.scss'
+  ignore:
+    - 'package/**'
+rules:
+  nesting-depth:
+    - 2
+    - max-depth: 3

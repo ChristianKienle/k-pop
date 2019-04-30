@@ -1,7 +1,7 @@
 
 /**
  * k-pop
- * version: 0.1.3,
+ * version: 0.1.4,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
@@ -81,6 +81,35 @@ function _objectSpread(target) {
   return target;
 }
 
+// @ts-check
+
+/**
+ * @param {any} cls
+ * @returns {boolean}
+ */
+var invalidClasses = function invalidClasses(cls) {
+  return typeof cls === "string" && cls.length > 0;
+};
+/**
+ * @typedef {string | null | undefined} Value
+ *
+ * @returns {Array.<string> | null}
+ * @param {Array.<Value>} classes
+ */
+
+
+var _classes = function _classes(classes) {
+  // Filter out null, undefined and ""
+  var onlyClasses = classes.filter(invalidClasses);
+
+  if (onlyClasses.length === 0) {
+    return null;
+  } // @ts-ignore
+
+
+  return onlyClasses;
+};
+
 var isVueComponent = function isVueComponent(component) {
   return component != null && component._isVue;
 };
@@ -100,28 +129,6 @@ var elFromRef = (function (ref) {
   return ref;
 });
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var VpArrow = {
   render: function render(h) {
     return h("span");
@@ -139,7 +146,7 @@ var VpTrigger = {
 };
 var PLACEMENTS = Popper.placements;
 var script = {
-  name: "KPop",
+  name: "k-pop",
   components: {
     Portal: Portal,
     VpTrigger: VpTrigger,
@@ -147,17 +154,21 @@ var script = {
     VpBody: VpBody
   },
   props: {
+    offset: {
+      type: Number,
+      default: 30
+    },
     theme: {
       type: String,
       default: null
     },
     bodyClass: {
       type: String,
-      default: "popper"
+      default: null
     },
     arrowClass: {
       type: String,
-      default: "popper__arrow"
+      default: null
     },
     transition: {
       type: String,
@@ -189,9 +200,7 @@ var script = {
   },
   data: function data() {
     return {
-      currentPlacement: this.placement,
-      visible_: this.visible,
-      offsetPosition_: null
+      visible_: this.visible
     };
   },
   computed: {
@@ -199,23 +208,25 @@ var script = {
     // should cause the Popper-instance to be recreated.
     stateThatRequiredPopperInstanceUpdate: function stateThatRequiredPopperInstanceUpdate() {
       return {
+        offset: this.offset,
         flips: this.flips,
         withArrow: this.withArrow,
         placement: this.placement
       };
     },
     hasCustomTriggerLogic: function hasCustomTriggerLogic() {
-      var res = this.$slots.trigger == null && this.$scopedSlots.trigger != null;
-      return res;
+      return this.$slots.trigger == null && this.$scopedSlots.trigger != null;
     },
     arrowClasses: function arrowClasses() {
-      return [this.arrowClass, this.theme == null ? "" : "vppopper__arrow--theme-".concat(this.theme)];
+      var theme = this.theme,
+          arrowClass = this.arrowClass;
+      return _classes([arrowClass, theme ? "kpop-arrow" : null]);
     },
     bodyClasses: function bodyClasses() {
-      return [this.bodyClass, this.theme == null ? "" : "vppopper__body--theme-".concat(this.theme)];
-    },
-    outOfBoundariesState: function outOfBoundariesState() {
-      return this.visible ? true : undefined;
+      var theme = this.theme,
+          bodyClass = this.bodyClass,
+          withArrow = this.withArrow;
+      return _classes([bodyClass, theme ? "kpop-theme-".concat(this.theme, " kpop-body") : null, !withArrow ? "kpop-no-arrow" : null]);
     },
     // We merge the user defined modifiers with the modifiers required by FdPopper
     modifiers_: function modifiers_() {
@@ -233,7 +244,7 @@ var script = {
         },
         offset: {
           enabled: true,
-          offset: '0,10'
+          offset: "0,".concat(this.offset)
         }
       }, this.modifiers);
     }
@@ -289,10 +300,6 @@ var script = {
     return mounted;
   }(),
   methods: {
-    // Called by Popper.js every time something changes.
-    updateState: function updateState(data) {
-      this.currentPlacement = data.placement;
-    },
     destroyPopperInstance: function destroyPopperInstance() {
       if (!this.popperInstance) {
         return;
@@ -307,9 +314,7 @@ var script = {
       var body = this.elements().body;
       var options = {
         modifiers: this.modifiers_,
-        placement: this.placement,
-        onCreate: this.updateState,
-        onUpdate: this.updateState
+        placement: this.placement
       };
       this.popperInstance = new Popper(reference, body, options);
     },
@@ -387,9 +392,7 @@ var __vue_render__ = function __vue_render__() {
     ref: "body",
     class: _vm.bodyClasses,
     attrs: {
-      "aria-hidden": String(!_vm.visible_),
-      "x-placement": _vm.currentPlacement,
-      "x-out-of-boundaries": _vm.outOfBoundariesState
+      "aria-hidden": String(!_vm.visible_)
     }
   }, [_vm._t("default", null, {
     "show": _vm.show,
@@ -397,7 +400,10 @@ var __vue_render__ = function __vue_render__() {
     "toggle": _vm.toggle
   }), _vm._v(" "), _c('vp-arrow', {
     ref: "arrow",
-    class: _vm.arrowClasses
+    class: _vm.arrowClasses,
+    attrs: {
+      "x-arrow": ""
+    }
   })], 2)], 1)], 1)], 1);
 };
 

@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for Pop.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="index.html">All files</a> Pop.vue
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/54</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/3</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/54</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
+  &lt;div&gt;
+    &lt;vp-trigger ref="trigger"&gt;
+    &lt;slot name="trigger" :show="show" :hide="hide" :toggle="toggle"/&gt;
+    &lt;/vp-trigger&gt;
+    &lt;Portal&gt;
+          &lt;!-- class="kp-body" --&gt;
+      &lt;transition name="fade"&gt;
+        &lt;vp-body
+          :class="bodyClasses"
+          v-show="visible_"
+          ref="body"
+          :aria-hidden="String(!visible_)"
+          :x-placement="currentPlacement"
+        &gt;
+          &lt;slot :show="show" :hide="hide" :toggle="toggle"/&gt;
+          &lt;!-- class="kp-arrow"  --&gt;
+          &lt;vp-arrow
+          :class="arrowClasses"
+          ref="arrow"/&gt;
+        &lt;/vp-body&gt;
+      &lt;/transition&gt;
+    &lt;/Portal&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >import classes from "./helper/classes"</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >const VpArrow = { render: h =&gt; h("span") };</span></span>
+<span class="cstat-no" title="statement not covered" >const VpBody = {</span>
+  render(h) {
+<span class="cstat-no" title="statement not covered" >    return h("div", [this.$slots.default]);</span>
+  }
+};
+<span class="cstat-no" title="statement not covered" >const VpTrigger = {</span>
+  render(h) {
+<span class="cstat-no" title="statement not covered" >    return h("span", this.$slots.default);</span>
+  },
+};
+&nbsp;
+<span class="cstat-no" title="statement not covered" >import { Portal } from "@linusborg/vue-simple-portal";</span>
+<span class="cstat-no" title="statement not covered" >import Popper from "popper.js";</span>
+<span class="cstat-no" title="statement not covered" >import elFromRef from "./helper/el-from-ref";</span>
+<span class="cstat-no" title="statement not covered" >export const PLACEMENTS = Popper.placements;</span>
+&nbsp;
+export default {
+  name: "KPop",
+  components: { Portal, VpTrigger, VpArrow, VpBody },
+  props: {
+    theme: { type: String, default: null },
+    bodyClass: { type: String, default: "popper" },
+    arrowClass: { type: String, default: "popper__arrow" },
+    transition: { type: String, default: "fade" },
+    withArrow: { type: Boolean, default: false },
+    flips: { type: Boolean, default: true },
+    visible: { type: Boolean, default: false },
+    modifiers: {
+      type: Object,
+<span class="fstat-no" title="function not covered" >      default: () =&gt; {}</span>
+    },
+    placement: {
+      type: String,
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      validator: value =&gt; PLACEMENTS.indexOf(value) &gt;= 0,</span></span>
+      default: "bottom"
+    }
+  },
+  data() {
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      currentPlacement: this.placement,
+      visible_: this.visible,
+      offsetPosition_: null
+    };
+  },
+  computed: {
+    // This computed prop simply references every prop that, when changed
+    // should cause the Popper-instance to be recreated.
+    stateThatRequiredPopperInstanceUpdate() {
+<span class="cstat-no" title="statement not covered" >      return {</span>
+        flips: this.flips,
+        withArrow: this.withArrow,
+        placement: this.placement
+      };
+    },
+    hasCustomTriggerLogic() {
+<span class="cstat-no" title="statement not covered" >      return this.$slots.trigger == null &amp;&amp; this.$scopedSlots.trigger != null;</span>
+    },
+    arrowClasses() {
+<span class="cstat-no" title="statement not covered" >      return [];</span>
+<span class="cstat-no" title="statement not covered" >      return [</span>
+        this.arrowClass,
+        this.theme == null ? "" : `kpop-arrow--theme-${this.theme}`
+      ];
+    },
+&nbsp;
+&nbsp;
+    bodyClasses() {
+<span class="cstat-no" title="statement not covered" >      const { theme, bodyClass } = this;</span>
+<span class="cstat-no" title="statement not covered" >      return [</span>
+        bodyClass || "",
+        theme != null ? '' : `kp-theme-${this.theme}`
+      ];
+&nbsp;
+      // return [];
+      // return [
+      //   this.bodyClass,
+      //   this.theme == null ? "" : `kpop-body--theme-${this.theme}`
+      // ];
+    },
+    // We merge the user defined modifiers with the modifiers required by FdPopper
+    modifiers_() {
+<span class="cstat-no" title="statement not covered" >      return {</span>
+        flip: {
+          enabled: this.flips
+        },
+        arrow: {
+          enabled: this.withArrow,
+          element: this.withArrow ? this.elements().arrow : undefined
+        },
+        preventOverflow: {
+          padding: 5,
+          boundariesElement: "scrollParent"
+        },
+        offset: {
+              enabled: true,
+              offset: '0,10'
+       },
+        ...this.modifiers
+      };
+    }
+  },
+  watch: {
+    stateThatRequiredPopperInstanceUpdate: {
+      deep: true,
+      handler() {
+<span class="cstat-no" title="statement not covered" >        this.updatePopperInstance();</span>
+      }
+    },
+    visible(visible) {
+<span class="cstat-no" title="statement not covered" >      this.visible_ = visible;</span>
+    }
+  },
+  beforeDestroy() {
+<span class="cstat-no" title="statement not covered" >    this.destroyPopperInstance();</span>
+<span class="cstat-no" title="statement not covered" >    if (!this.hasCustomTriggerLogic) {</span>
+<span class="cstat-no" title="statement not covered" >      this.elements().rigger.removeEventListener("click", this.toggle, false);</span>
+    }
+  },
+  async mounted() {
+<span class="cstat-no" title="statement not covered" >    await this.$nextTick();</span>
+<span class="cstat-no" title="statement not covered" >    this.updatePopperInstance();</span>
+<span class="cstat-no" title="statement not covered" >    if (!this.hasCustomTriggerLogic) {</span>
+<span class="cstat-no" title="statement not covered" >      this.elements().trigger.addEventListener("click", this.toggle, false);</span>
+    }
+  },
+  methods: {
+    // Called by Popper.js every time something changes.
+    updateState(data) {
+<span class="cstat-no" title="statement not covered" >      this.currentPlacement = data.placement;</span>
+    },
+    destroyPopperInstance() {
+<span class="cstat-no" title="statement not covered" >      if (!this.popperInstance) {</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      this.popperInstance.destroy();</span>
+<span class="cstat-no" title="statement not covered" >      this.popperInstance = null;</span>
+    },
+    updatePopperInstance() {
+<span class="cstat-no" title="statement not covered" >      this.destroyPopperInstance();</span>
+<span class="cstat-no" title="statement not covered" >      const reference = this.elements().trigger || this.trigger;</span>
+<span class="cstat-no" title="statement not covered" >      const body = this.elements().body;</span>
+<span class="cstat-no" title="statement not covered" >      const options = {</span>
+        modifiers: this.modifiers_,
+        placement: this.placement,
+        onCreate: this.updateState,
+        onUpdate: this.updateState
+      };
+<span class="cstat-no" title="statement not covered" >      this.popperInstance = new Popper(reference, body, options);</span>
+    },
+    scheduleUpdate() {
+<span class="cstat-no" title="statement not covered" >      if (this.popperInstance) {</span>
+<span class="cstat-no" title="statement not covered" >        this.popperInstance.scheduleUpdate();</span>
+      }
+    },
+    setVisible(newVisible) {
+<span class="cstat-no" title="statement not covered" >      this.visible_ = newVisible;</span>
+<span class="cstat-no" title="statement not covered" >      this.$emit("update:visible", this.visible_);</span>
+<span class="cstat-no" title="statement not covered" >      this.scheduleUpdate();</span>
+    },
+    show() {
+<span class="cstat-no" title="statement not covered" >      this.setVisible(true);</span>
+    },
+    hide(event) {
+<span class="cstat-no" title="statement not covered" >      if (event != null) {</span>
+<span class="cstat-no" title="statement not covered" >        const { target } = event;</span>
+<span class="cstat-no" title="statement not covered" >        const { trigger } = this.elements();</span>
+<span class="cstat-no" title="statement not covered" >        const targetsReference = reference.contains(target);</span>
+<span class="cstat-no" title="statement not covered" >        if (targetsReference) {</span>
+<span class="cstat-no" title="statement not covered" >          return;</span>
+        }
+      }
+<span class="cstat-no" title="statement not covered" >      this.setVisible(false);</span>
+    },
+    toggle() {
+<span class="cstat-no" title="statement not covered" >      this.setVisible(!this.visible_);</span>
+    },
+    elements() {
+<span class="cstat-no" title="statement not covered" >      const { $refs } = this;</span>
+<span class="cstat-no" title="statement not covered" >      return {</span>
+        arrow: elFromRef($refs.arrow),
+        body: elFromRef($refs.body),
+        trigger: elFromRef($refs.trigger)
+      };
+    }
+  }
+};
+&lt;/script&gt;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Apr 30 2019 23:07:08 GMT+0200 (Central European Summer Time)
+</div>
+</div>
+<script src="prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="sorter.js"></script>
+</body>
+</html>

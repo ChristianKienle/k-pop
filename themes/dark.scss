@@ -1,0 +1,19 @@
+@import './mixins';
+
+$bg-color: #1d2935;
+$border-color: #1d2935;
+$arrow-border-color: darken($border-color, 5%);
+
+@include kp-theme(
+  $name: 'dark',
+  $body-padding: 15px,
+  $body-bg-color: $bg-color,
+  $body-border-color: $border-color,
+  $body-border-radius: 5px,
+  $body-shadow: 0 0 10px 3px rgba(0, 0, 0, .12),
+  $arrow-width: 15px,
+  $arrow-color: $bg-color,
+  $arrow-border-color: $arrow-border-color
+) {
+  color: #fff;
+}

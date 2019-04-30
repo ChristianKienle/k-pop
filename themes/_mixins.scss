@@ -1,0 +1,149 @@
+@mixin kp-themed-body (
+  $padding,
+  $bg-color,
+  $border-color,
+  $border-radius,
+  $shadow,
+  $arrow-width,
+  $arrow-color,
+  $arrow-border-color) {
+  $arrow-width-half: $arrow-width / 2;
+
+  background-color: $bg-color;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+  padding: $padding;
+  @content;
+
+  &.kpop-no-arrow {
+    margin: 0 !important;
+
+    .kpop-arrow {
+      display: none;
+    }
+  }
+
+  &[x-out-of-boundaries] {
+    display: none;
+  }
+
+  &[x-placement^='bottom'] {
+    margin-top: $arrow-width;
+
+    .kpop-arrow {
+      border-bottom-color: $arrow-border-color;
+      border-width: 0 $arrow-width-half $arrow-width;
+      margin: 0 $arrow-width-half;
+      top: -$arrow-width;
+
+      &::after {
+        border-bottom-color: $arrow-color;
+        border-width: 0 $arrow-width-half $arrow-width;
+        margin: 0 (-$arrow-width-half);
+        top: 1px;
+      }
+    }
+  }
+
+  &[x-placement^='top'] {
+    margin-bottom: $arrow-width;
+
+    .kpop-arrow {
+      border-top-color: $arrow-color;
+      border-width: $arrow-width $arrow-width-half 0 $arrow-width-half;
+      bottom: -$arrow-width;
+      margin: 0 $arrow-width-half;
+
+      &::after {
+        border-top-color: $arrow-color;
+        border-width: $arrow-width $arrow-width-half 0 $arrow-width-half;
+        bottom: 1px;
+        margin: 0 (-$arrow-width-half);
+      }
+    }
+  }
+
+  &[x-placement^='left'] {
+    margin-right: $arrow-width;
+
+    .kpop-arrow {
+      border-left-color: $arrow-border-color;
+      border-width: $arrow-width-half 0 $arrow-width-half $arrow-width;
+      margin: $arrow-width-half 0;
+      right: -$arrow-width;
+
+      &::after {
+        border-left-color: $arrow-color;
+        border-width: $arrow-width-half 0 $arrow-width-half $arrow-width;
+        margin: -$arrow-width-half 0;
+        right: 1px;
+      }
+    }
+  }
+
+  &[x-placement^='right'] {
+    margin-left: $arrow-width;
+
+    .kpop-arrow {
+      border-right-color: $arrow-border-color;
+      border-width: $arrow-width-half $arrow-width $arrow-width-half 0;
+      left: -$arrow-width;
+      margin: $arrow-width-half 0;
+
+      &::after {
+        border-right-color: $arrow-color;
+        border-width: $arrow-width-half $arrow-width $arrow-width-half 0;
+        left: 1px;
+        margin: -$arrow-width-half 0;
+      }
+    }
+  }
+}
+
+@mixin kp-theme (
+  $name,
+  $body-padding,
+  $body-bg-color,
+  $body-border-color,
+  $body-border-radius,
+  $body-shadow,
+  $arrow-width,
+  $arrow-color,
+  $arrow-border-color
+  ) {
+  .kpop-theme-#{$name}.kpop-body {
+    @include kp-themed-body(
+      $body-padding,
+      $body-bg-color,
+      $body-border-color,
+      $body-border-radius,
+      $body-shadow,
+      $arrow-width,
+      $arrow-color,
+      $arrow-border-color
+    ) {
+      @content;
+    }
+    @include kp-themed-arrow;
+
+  }
+}
+
+@mixin kp-themed-arrow {
+  .kpop-arrow {
+    border-color: transparent;
+    border-style: solid;
+    height: 0;
+    position: absolute;
+    width: 0;
+
+    &::after {
+      border-color: transparent;
+      border-style: solid;
+      content: '';
+      position: absolute;
+    }
+    @content;
+  }
+}

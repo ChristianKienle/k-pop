@@ -1,62 +1,64 @@
-var warn = console.log;
-var HANDLER = "__fundamentalvue_clickout_handler__";
+const warn = console.log
+
+const HANDLER = "__fundamentalvue_clickout_handler__"
+
 /** @type {import("vue").DirectiveFunction} */
+const unbind = (el, { modifiers }) => {
+  document.documentElement.removeEventListener(
+    "click",
+    el[HANDLER],
+    modifiers.capture
+  )
+  delete el[HANDLER]
+}
 
-var unbind = function unbind(el, _ref) {
-  var modifiers = _ref.modifiers;
-  document.documentElement.removeEventListener("click", el[HANDLER], modifiers.capture);
-  delete el[HANDLER];
-};
 /** @type {import("vue").DirectiveFunction} */
-
-
-var bind = function bind(el, binding, _ref2) {
-  var vm = _ref2.context;
-  unbind(el, binding);
-  var expression = binding.expression,
-      name = binding.name,
-      modifiers = binding.modifiers,
-      callback = binding.value;
+const bind = (el, binding, { context: vm }) => {
+  unbind(el, binding)
+  const { expression, name, modifiers, value: callback } = binding
 
   if (typeof callback !== "function") {
     if (process.env.NODE_ENV !== "production") {
-      warn("v-".concat(name, "=").concat(expression, " expects a function value, got ").concat(callback));
+      warn(`v-${name}=${expression} expects a function value, got ${callback}`)
     }
-
-    return;
+    return
   }
 
-  var initialMacrotaskEnded = false;
-  setTimeout(function () {
-    return initialMacrotaskEnded = true;
-  });
+  let initialMacrotaskEnded = false
+  setTimeout(() => (initialMacrotaskEnded = true))
 
-  el[HANDLER] = function (ev) {
-    var path = ev.path || (ev.composedPath ? ev.composedPath() : undefined);
-
-    if (initialMacrotaskEnded && (path ? path.indexOf(el) < 0 : !el.contains(ev.target))) {
+  el[HANDLER] = ev => {
+    const path = ev.path || (ev.composedPath ? ev.composedPath() : undefined)
+    if (
+      initialMacrotaskEnded &&
+      (path ? path.indexOf(el) < 0 : !el.contains(ev.target))
+    ) {
       if (modifiers.stop) {
-        ev.stopPropagation();
+        ev.stopPropagation()
       }
-
-      return callback.call(vm, ev);
+      return callback.call(vm, ev)
     }
-  };
+  }
 
-  document.documentElement.addEventListener("click", el[HANDLER], modifiers.capture);
-};
+  document.documentElement.addEventListener(
+    "click",
+    el[HANDLER],
+    modifiers.capture
+  )
+}
 
 export default {
-  bind: bind,
-  unbind: unbind,
-  update: function update(el, binding, vnode) {
+  bind,
+  unbind,
+  update(el, binding, vnode) {
     if (binding.value === binding.oldValue) {
-      return;
+      return
     }
-
-    bind(el, binding, vnode);
+    bind(el, binding, vnode)
   }
-}; // Adopted from https://github.com/mrastiak/vue-clickout
+}
+
+// Adopted from https://github.com/mrastiak/vue-clickout
 // Below is the original license in order to give proper credits. Thanks man.
 // The MIT License (MIT)
 // Copyright (c) 2015 Denis Karabaza

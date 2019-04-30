@@ -1,36 +1,57 @@
 <template>
   <div class="settings">
-    <select v-model="placement">
-      <option v-for="aPlacement in placements" :value="aPlacement" :key="aPlacement">{{aPlacement}}</option>
-    </select>
-    <select v-model="overflowContainer">
-      <option
-        v-for="container in overflowContainers"
-        :value="container"
-        :key="container"
-      >{{container}}</option>
-    </select>
-    <label>
-      <input type="checkbox" v-model="flips">Flip
-    </label>
-    <label>
-      <input type="checkbox" v-model="withArrow">Arrow
-    </label>
-    <select v-model="theme">
-      <option v-for="aTheme in themes" :value="aTheme" :key="aTheme">{{aTheme}}</option>
-    </select>
+    <Playground-Settings-Row label="Placement">
+      <select v-model="placement">
+        <option
+          v-for="aPlacement in placements"
+          :value="aPlacement"
+          :key="aPlacement"
+        >{{aPlacement}}</option>
+      </select>
+    </Playground-Settings-Row>
+
+    <Playground-Settings-Row label="Overflow">
+      <select v-model="overflowContainer">
+        <option
+          v-for="container in overflowContainers"
+          :value="container"
+          :key="container"
+        >{{container}}</option>
+      </select>
+    </Playground-Settings-Row>
+
+    <Playground-Settings-Row label="Theme">
+      <select v-model="theme">
+        <option v-for="aTheme in themes" :value="aTheme" :key="aTheme">{{aTheme}}</option>
+      </select>
+    </Playground-Settings-Row>
+    <Playground-Settings-Row label="Offset">
+        <input type="range" v-model.number="offset" min="0" max="100" value="10">
+    </Playground-Settings-Row>
+
+    <Playground-Settings-Row label="Options">
+      <label>
+        <input type="checkbox" v-model="flips">Flip
+      </label>
+      <br />
+      <label>
+        <input type="checkbox" v-model="withArrow">Arrow
+      </label>
+      <br />
+      <slot/>
+    </Playground-Settings-Row>
   </div>
 </template>
 
 <script>
 export default {
   watch: {
-    popperProps(newProps) {
-      this.$emit("changed", newProps)
+    kPopProps(newProps) {
+      this.$emit("changed", newProps);
     }
   },
   computed: {
-    popperProps() {
+    kPopProps() {
       const modifiers = {
         preventOverflow: {
           enabled: this.overflowContainer !== "disabled",
@@ -39,18 +60,20 @@ export default {
               ? "scrollParent"
               : this.overflowContainer
         }
-      }
+      };
       return {
         modifiers,
-        flip: this.flips,
+        offset: this.offset,
+        flips: this.flips,
         placement: this.placement,
         withArrow: this.withArrow,
-        theme: this.theme
+        theme: this.theme === "none" ? null : this.theme
       };
     }
   },
   data() {
     return {
+      offset: 10,
       theme: "clean",
       overflowContainer: "scrollParent",
       placement: "bottom",
@@ -71,7 +94,7 @@ export default {
         "bottom",
         "bottom-end"
       ],
-      themes: ["none", "clean", "big-arrow", "dark"]
+      themes: ["none", "v2", "clean", "big-arrow", "dark"]
     };
   }
 };
@@ -79,10 +102,13 @@ export default {
 
 <style scoped>
 .settings {
-  padding: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   background-color: #fdfdfd;
   border: 1px solid #eeeeee;
+  font-size: 11px;
 }
 </style>

@@ -1,13 +1,17 @@
 <template>
   <div>
-    <Settings @changed="popperProps = $event"/>
+    <Settings @changed="kPopProps = $event">
+      <label>
+        <input type="checkbox" v-model="useNativeButton">Native Button
+      </label>
+    </Settings>
 
     <div class="outer">
       <div class="inner">
         <ClientOnly>
-          <KPop ref="trigger" v-bind="popperProps">
+          <KPop ref="trigger" v-bind="kPopProps">
             <template #trigger="{toggle}">
-              <Trigger @click="toggle">Show Popover</Trigger>
+              <Trigger :native="useNativeButton" @click="toggle">Show Popover</Trigger>
             </template>
             <SampleContent/>
           </KPop>
@@ -18,16 +22,18 @@
 </template>
 
 <script>
-import Settings from "./Settings.vue";
+import Settings from "./Playground/Settings.vue";
 
 export default {
   name: "Playground",
   components: { Settings },
   data: () => ({
-    popperProps: {
+    useNativeButton: false,
+    kPopProps: {
+      offset: 10,
       overflowContainer: "scrollParent",
       placement: "bottom",
-      flip: true,
+      flips: true,
       withArrow: true,
       theme: "clean"
     }
@@ -54,8 +60,8 @@ export default {
 };
 </script>
 
-<style lang="sass">
-@import "./../../../../themes/index.scss"
+<style lang="scss">
+@import "./../../../themes/all.scss";
 </style>
 
 <style scoped>

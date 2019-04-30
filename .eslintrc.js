@@ -3,6 +3,14 @@ module.exports = {
   env: {
     node: true
   },
+  overrides: [
+    {
+      files: ["**/__tests__/*.test.js"],
+      env: {
+        jest: true
+      }
+    }
+  ],
   extends: ["plugin:vue/recommended"],
   rules: {
     quotes: ["error", "double"],

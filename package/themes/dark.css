@@ -1,77 +1,74 @@
-.vppopper__body--theme-dark {
-  width: auto;
-  background-color: #2c3e50;
-  color: #c9fae9;
-  padding: 1.5rem;
-  display: inline-block;
-  border-radius: 7px;
-  position: absolute;
-  font-size: 14px;
-  border:  1px #000000 solid;
-  z-index: 200000;
-  font-family: sans-serif;
-}
+.kpop-theme-dark.kpop-body {
+  background-color: #1d2935;
+  border: 1px solid #1d2935;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.12);
+  padding: 15px;
+  color: #fff; }
+  .kpop-theme-dark.kpop-body.kpop-no-arrow {
+    margin: 0 !important; }
+    .kpop-theme-dark.kpop-body.kpop-no-arrow .kpop-arrow {
+      display: none; }
+  .kpop-theme-dark.kpop-body[x-out-of-boundaries] {
+    display: none; }
+  .kpop-theme-dark.kpop-body[x-placement^='bottom'] {
+    margin-top: 15px; }
+    .kpop-theme-dark.kpop-body[x-placement^='bottom'] .kpop-arrow {
+      border-bottom-color: #141c25;
+      border-width: 0 7.5px 15px;
+      margin: 0 7.5px;
+      top: -15px; }
+      .kpop-theme-dark.kpop-body[x-placement^='bottom'] .kpop-arrow::after {
+        border-bottom-color: #1d2935;
+        border-width: 0 7.5px 15px;
+        margin: 0 -7.5px;
+        top: 1px; }
+  .kpop-theme-dark.kpop-body[x-placement^='top'] {
+    margin-bottom: 15px; }
+    .kpop-theme-dark.kpop-body[x-placement^='top'] .kpop-arrow {
+      border-top-color: #1d2935;
+      border-width: 15px 7.5px 0 7.5px;
+      bottom: -15px;
+      margin: 0 7.5px; }
+      .kpop-theme-dark.kpop-body[x-placement^='top'] .kpop-arrow::after {
+        border-top-color: #1d2935;
+        border-width: 15px 7.5px 0 7.5px;
+        bottom: 1px;
+        margin: 0 -7.5px; }
+  .kpop-theme-dark.kpop-body[x-placement^='left'] {
+    margin-right: 15px; }
+    .kpop-theme-dark.kpop-body[x-placement^='left'] .kpop-arrow {
+      border-left-color: #141c25;
+      border-width: 7.5px 0 7.5px 15px;
+      margin: 7.5px 0;
+      right: -15px; }
+      .kpop-theme-dark.kpop-body[x-placement^='left'] .kpop-arrow::after {
+        border-left-color: #1d2935;
+        border-width: 7.5px 0 7.5px 15px;
+        margin: -7.5px 0;
+        right: 1px; }
+  .kpop-theme-dark.kpop-body[x-placement^='right'] {
+    margin-left: 15px; }
+    .kpop-theme-dark.kpop-body[x-placement^='right'] .kpop-arrow {
+      border-right-color: #141c25;
+      border-width: 7.5px 15px 7.5px 0;
+      left: -15px;
+      margin: 7.5px 0; }
+      .kpop-theme-dark.kpop-body[x-placement^='right'] .kpop-arrow::after {
+        border-right-color: #1d2935;
+        border-width: 7.5px 15px 7.5px 0;
+        left: 1px;
+        margin: -7.5px 0; }
+  .kpop-theme-dark.kpop-body .kpop-arrow {
+    border-color: transparent;
+    border-style: solid;
+    height: 0;
+    position: absolute;
+    width: 0; }
+    .kpop-theme-dark.kpop-body .kpop-arrow::after {
+      border-color: transparent;
+      border-style: solid;
+      content: '';
+      position: absolute; }
 
-.vppopper__body--theme-dark
-.vppopper__arrow--theme-dark {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  position: absolute;
-  margin: 5px;
-}
-
-.vppopper__body--theme-dark[x-placement^="top"] {
-  margin-bottom: 5px;
-}
-
-.vppopper__body--theme-dark[x-placement^="top"]
-.vppopper__arrow--theme-dark {
-  border-width: 5px 5px 0 5px;
-  border-color: #2c3e50 transparent transparent transparent;
-  bottom: -5px;
-  left: calc(50% - 5px);
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.vppopper__body--theme-dark[x-placement^="bottom"] {
-  margin-top: 5px;
-}
-
-.vppopper__body--theme-dark[x-placement^="bottom"]
-.vppopper__arrow--theme-dark {
-  border-width: 0 5px 5px 5px;
-  border-color: transparent transparent #2c3e50 transparent;
-  top: -5px;
-  left: calc(50% - 5px);
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.vppopper__body--theme-dark[x-placement^="right"] {
-  margin-left: 5px;
-}
-.vppopper__body--theme-dark[x-placement^="right"]
-.vppopper__arrow--theme-dark {
-  border-width: 5px 5px 5px 0;
-  border-color: transparent #2c3e50 transparent transparent;
-  left: -5px;
-  top: calc(50% - 5px);
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.vppopper__body--theme-dark[x-placement^="left"] {
-  margin-right: 5px;
-}
-
-.vppopper__body--theme-dark[x-placement^="left"]
-.vppopper__arrow--theme-dark {
-  border-width: 5px 0 5px 5px;
-  border-color: transparent transparent transparent #2c3e50;
-  right: -5px;
-  top: calc(50% - 5px);
-  margin-left: 0;
-  margin-right: 0;
-}
+/*# sourceMappingURL=dark.css.map */

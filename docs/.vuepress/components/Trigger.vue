@@ -1,11 +1,24 @@
 <template>
-  <button class="vp-button" v-on="$listeners">
+  <button :class="classes" v-on="$listeners">
     <slot/>
   </button>
 </template>
 
+<script>
+export default {
+  props: {
+    native: { type: Boolean, default: false }
+  },
+  computed: {
+    classes() {
+      return this.native ? null : ["kpop-button"]
+    }
+  }
+}
+</script>
+
 <style>
-.vp-button {
+.kpop-button {
   display: inline-block;
   border: none;
   padding: 0.7rem 1rem;
@@ -24,17 +37,17 @@
   -moz-appearance: none;
 }
 
-.vp-button:hover,
-.vp-button:focus {
+.kpop-button:hover,
+.kpop-button:focus {
   color: #e4b3fa;
   background: #36014e;
 }
 
-.vp-button:focus {
+.kpop-button:focus {
   outline: none;
 }
 
-.vp-button:active {
+.kpop-button:active {
   transform: scale(0.95);
 }
 </style>

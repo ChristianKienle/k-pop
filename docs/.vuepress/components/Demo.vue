@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import "./../../../themes/clean.css"
+import "./../../../themes/clean.scss"
 export default {
   name: "Demo",
   components: {

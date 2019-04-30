@@ -1,7 +1,7 @@
-import Pop from "./Pop";
+import Pop from "./Pop"
 
 if (typeof window !== "undefined" && window.Vue && window.Vue === Vue) {
-  Vue.use(Pop);
+  Vue.use(Pop)
 }
 
-export default Pop;
+export default Pop

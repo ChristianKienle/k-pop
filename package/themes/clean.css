@@ -1,84 +1,73 @@
-.vppopper__body--theme-clean {
-  width: auto;
-  background-color: #ffffff;
-  color: #777777  ;
-  padding: 1rem;
-  display: inline-block;
-  border-radius: 4px;
-  position: absolute;
-  font-size: 14px;
-  border: 1px solid #ebeef5;
-  z-index: 200000;
-  font-family: sans-serif;
-  -moz-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-  -webkit-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-}
+.kpop-theme-clean.kpop-body {
+  background-color: #fff;
+  border: 1px solid #f1f3f8;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.12);
+  padding: 15px; }
+  .kpop-theme-clean.kpop-body.kpop-no-arrow {
+    margin: 0 !important; }
+    .kpop-theme-clean.kpop-body.kpop-no-arrow .kpop-arrow {
+      display: none; }
+  .kpop-theme-clean.kpop-body[x-out-of-boundaries] {
+    display: none; }
+  .kpop-theme-clean.kpop-body[x-placement^='bottom'] {
+    margin-top: 15px; }
+    .kpop-theme-clean.kpop-body[x-placement^='bottom'] .kpop-arrow {
+      border-bottom-color: #e0e4f0;
+      border-width: 0 7.5px 15px;
+      margin: 0 7.5px;
+      top: -15px; }
+      .kpop-theme-clean.kpop-body[x-placement^='bottom'] .kpop-arrow::after {
+        border-bottom-color: #fff;
+        border-width: 0 7.5px 15px;
+        margin: 0 -7.5px;
+        top: 1px; }
+  .kpop-theme-clean.kpop-body[x-placement^='top'] {
+    margin-bottom: 15px; }
+    .kpop-theme-clean.kpop-body[x-placement^='top'] .kpop-arrow {
+      border-top-color: #fff;
+      border-width: 15px 7.5px 0 7.5px;
+      bottom: -15px;
+      margin: 0 7.5px; }
+      .kpop-theme-clean.kpop-body[x-placement^='top'] .kpop-arrow::after {
+        border-top-color: #fff;
+        border-width: 15px 7.5px 0 7.5px;
+        bottom: 1px;
+        margin: 0 -7.5px; }
+  .kpop-theme-clean.kpop-body[x-placement^='left'] {
+    margin-right: 15px; }
+    .kpop-theme-clean.kpop-body[x-placement^='left'] .kpop-arrow {
+      border-left-color: #e0e4f0;
+      border-width: 7.5px 0 7.5px 15px;
+      margin: 7.5px 0;
+      right: -15px; }
+      .kpop-theme-clean.kpop-body[x-placement^='left'] .kpop-arrow::after {
+        border-left-color: #fff;
+        border-width: 7.5px 0 7.5px 15px;
+        margin: -7.5px 0;
+        right: 1px; }
+  .kpop-theme-clean.kpop-body[x-placement^='right'] {
+    margin-left: 15px; }
+    .kpop-theme-clean.kpop-body[x-placement^='right'] .kpop-arrow {
+      border-right-color: #e0e4f0;
+      border-width: 7.5px 15px 7.5px 0;
+      left: -15px;
+      margin: 7.5px 0; }
+      .kpop-theme-clean.kpop-body[x-placement^='right'] .kpop-arrow::after {
+        border-right-color: #fff;
+        border-width: 7.5px 15px 7.5px 0;
+        left: 1px;
+        margin: -7.5px 0; }
+  .kpop-theme-clean.kpop-body .kpop-arrow {
+    border-color: transparent;
+    border-style: solid;
+    height: 0;
+    position: absolute;
+    width: 0; }
+    .kpop-theme-clean.kpop-body .kpop-arrow::after {
+      border-color: transparent;
+      border-style: solid;
+      content: '';
+      position: absolute; }
 
-.vppopper__body--theme-clean[x-out-of-boundaries] {
-  display: none;
-}
-
-.vppopper__body--theme-clean
-.vppopper__arrow--theme-clean {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  position: absolute;
-  margin: 8px;
-}
-
-.vppopper__body--theme-clean[x-placement^="top"] {
-  margin-bottom: 5px;
-}
-
-.vppopper__body--theme-clean[x-placement^="top"]
-.vppopper__arrow--theme-clean {
-  border-width: 5px 5px 0 5px;
-  border-color: #fafafa transparent transparent transparent;
-  bottom: -5px;
-  left: calc(50% - 5px);
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.vppopper__body--theme-clean[x-placement^="bottom"] {
-  margin-top: 5px;
-}
-
-.vppopper__body--theme-clean[x-placement^="bottom"]
-.vppopper__arrow--theme-clean {
-  border-width: 0 5px 5px 5px;
-  border-color: transparent transparent #fafafa transparent;
-  top: -5px;
-  left: calc(50% - 5px);
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.vppopper__body--theme-clean[x-placement^="right"] {
-  margin-left: 5px;
-}
-.vppopper__body--theme-clean[x-placement^="right"]
-.vppopper__arrow--theme-clean {
-  border-width: 5px 5px 5px 0;
-  border-color: transparent #fafafa transparent transparent;
-  left: -5px;
-  top: calc(50% - 5px);
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.vppopper__body--theme-clean[x-placement^="left"] {
-  margin-right: 5px;
-}
-
-.vppopper__body--theme-clean[x-placement^="left"]
-.vppopper__arrow--theme-clean {
-  border-width: 5px 0 5px 5px;
-  border-color: transparent transparent transparent #fafafa;
-  right: -5px;
-  top: calc(50% - 5px);
-  margin-left: 0;
-  margin-right: 0;
-}
+/*# sourceMappingURL=clean.css.map */
