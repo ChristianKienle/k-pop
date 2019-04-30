@@ -46,7 +46,7 @@ export default {
   name: "k-pop",
   components: { Portal, VpTrigger, VpArrow, VpBody },
   props: {
-    offset: { type: Number, default: 30 },
+    offset: { type: Number, default: 5 },
     theme: { type: String, default: null },
     bodyClass: { type: String, default: null },
     arrowClass: { type: String, default: null },

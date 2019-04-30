@@ -1,8 +1,9 @@
 {
   "name": "k-pop",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "scripts": {
+    "build:and:release": "npm run build && cd package && npm publish",
     "serve:demo": "vue-cli-service serve demo/main.js",
     "serve": "vue-cli-service serve",
     "docs:dev": "vuepress dev docs",

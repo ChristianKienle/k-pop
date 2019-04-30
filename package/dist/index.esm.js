@@ -1,7 +1,7 @@
 
 /**
  * k-pop
- * version: 0.1.4,
+ * version: 0.1.5,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
@@ -156,7 +156,7 @@ var script = {
   props: {
     offset: {
       type: Number,
-      default: 30
+      default: 5
     },
     theme: {
       type: String,
