@@ -1,4 +1,4 @@
-import KPop from "./../../src"
+import KPop from "./../../package/src/index"
 export default ({
   Vue, // the version of Vue being used in the VuePress app
   options, // the options for the root Vue instance

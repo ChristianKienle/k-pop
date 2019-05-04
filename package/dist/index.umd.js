@@ -1,7 +1,7 @@
 
 /**
  * k-pop
- * version: 0.1.7,
+ * version: 0.1.8,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
@@ -992,7 +992,7 @@
 	      if (!isBrowser) return;
 	      var parent = document.querySelector('body');
 	      var child = document.createElement(this.tag);
-	      child.id = config.selector;
+	      child.id = this.selector.substring(1);
 	      parent.append(child);
 	    },
 	    mount: function mount() {
@@ -3659,6 +3659,16 @@
 	  return ref;
 	});
 
+	var shortUuid = function shortUuid() {
+	  var text = "";
+	  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+	  for (var i = 0; i < 5; i++) {
+	    text += possible.charAt(Math.floor(Math.random() * possible.length));
+	  }
+
+	  return text;
+	};
 	var VpArrow = {
 	  render: function render(h) {
 	    return h("span");
@@ -3674,7 +3684,6 @@
 	    return h("span", this.$slots.default);
 	  }
 	};
-	var PLACEMENTS = Popper.placements;
 	var script = {
 	  name: "k-pop",
 	  components: {
@@ -3684,6 +3693,12 @@
 	    VpBody: VpBody
 	  },
 	  props: {
+	    portalSelector: {
+	      default: function _default() {
+	        return "#k-pop-portal-".concat(shortUuid());
+	      },
+	      type: String
+	    },
 	    offset: {
 	      type: Number,
 	      default: 5
@@ -3723,7 +3738,7 @@
 	    placement: {
 	      type: String,
 	      validator: function validator(value) {
-	        return PLACEMENTS.indexOf(value) >= 0;
+	        return Popper.placements.indexOf(value) >= 0;
 	      },
 	      default: "bottom"
 	    }
@@ -3765,8 +3780,8 @@
 	          enabled: this.flips
 	        },
 	        arrow: {
-	          enabled: this.withArrow,
-	          element: this.withArrow ? this.elements().arrow : undefined
+	          enabled: this.withArrow // element: this.withArrow ? this.elements().arrow : undefined
+
 	        },
 	        preventOverflow: {
 	          padding: 5,
@@ -3870,7 +3885,7 @@
 	    elements: function elements() {
 	      var $refs = this.$refs;
 	      return {
-	        arrow: elFromRef($refs.arrow),
+	        // arrow: elFromRef($refs.arrow),
 	        body: elFromRef($refs.body),
 	        trigger: elFromRef($refs.trigger)
 	      };
@@ -3980,9 +3995,9 @@
 	    "show": _vm.show,
 	    "hide": _vm.hide,
 	    "toggle": _vm.toggle
-	  })], 2), _vm._v(" "), _c('Portal', [_c('transition', {
+	  })], 2), _vm._v(" "), _c('portal', {
 	    attrs: {
-	      "name": "fade"
+	      "selector": _vm.portalSelector
 	    }
 	  }, [_c('vp-body', {
 	    directives: [{
@@ -4001,12 +4016,11 @@
 	    "hide": _vm.hide,
 	    "toggle": _vm.toggle
 	  }), _vm._v(" "), _c('vp-arrow', {
-	    ref: "arrow",
 	    class: _vm.arrowClasses,
 	    attrs: {
 	      "x-arrow": ""
 	    }
-	  })], 2)], 1)], 1)], 1);
+	  })], 2)], 1)], 1);
 	};
 
 	var __vue_staticRenderFns__ = [];

@@ -1,6 +1,6 @@
 {
   "name": "k-pop",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "private": true,
   "scripts": {
     "build:and:release": "npm run build && cd package && npm publish",
@@ -17,15 +17,14 @@
     "lint:themes": "sass-lint --config .sass-lint.yml --verbose  --no-exit",
     "test:e2e": "vue-cli-service test:e2e"
   },
-  "dependencies": {},
   "peerDependencies": {
-    "@linusborg/vue-simple-portal": "^0.1.1",
+    "@linusborg/vue-simple-portal": "^0.1.2",
     "vue": "^2.6.10",
     "popper.js": "^1.15.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
-    "@linusborg/vue-simple-portal": "^0.1.1",
+    "@linusborg/vue-simple-portal": "^0.1.2",
     "@types/jest": "^24.0.12",
     "@vue/cli-plugin-babel": "^3.6.0",
     "@vue/cli-plugin-e2e-cypress": "^3.6.0",

@@ -13,7 +13,6 @@ title: Guide
 
 {{ $page.lib }} is a simple, yet powerful, popover component for [Vue](https://vuejs.org).
 
-
 ## Getting Started
 
 Import {{ $page.lib }} along with one of the themes.

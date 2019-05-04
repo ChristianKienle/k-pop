@@ -3,8 +3,8 @@
     <vp-trigger ref="trigger">
       <slot name="trigger" :show="show" :hide="hide" :toggle="toggle" />
     </vp-trigger>
-    <Portal>
-      <transition name="fade">
+
+    <portal :selector="portalSelector">
         <vp-body
           :class="bodyClasses"
           v-show="visible_"
@@ -15,37 +15,46 @@
           <vp-arrow
             x-arrow
             :class="arrowClasses"
-            ref="arrow"
           />
         </vp-body>
-      </transition>
-    </Portal>
+    </portal>
   </div>
 </template>
 <script>
-
 import classes from "./helper/classes"
+import { Portal } from "@linusborg/vue-simple-portal";
+import Popper from "popper.js";
+import elFromRef from "./helper/el-from-ref";
+
+export const shortUuid = () => {
+  let text = "";
+  const possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (let i = 0; i < 5; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+};
+
 const VpArrow = { render: h => h("span") };
+
 const VpBody = {
   render(h) {
     return h("div", [this.$slots.default]);
   }
 };
+
 const VpTrigger = {
   render(h) {
     return h("span", this.$slots.default);
   },
 };
 
-import { Portal } from "@linusborg/vue-simple-portal";
-import Popper from "popper.js";
-import elFromRef from "./helper/el-from-ref";
-export const PLACEMENTS = Popper.placements;
-
 export default {
   name: "k-pop",
   components: { Portal, VpTrigger, VpArrow, VpBody },
   props: {
+    portalSelector: { default: () => `#k-pop-portal-${shortUuid()}`, type: String },
     offset: { type: Number, default: 5 },
     theme: { type: String, default: null },
     bodyClass: { type: String, default: null },
@@ -60,7 +69,7 @@ export default {
     },
     placement: {
       type: String,
-      validator: value => PLACEMENTS.indexOf(value) >= 0,
+      validator: value => Popper.placements.indexOf(value) >= 0,
       default: "bottom"
     }
   },
@@ -106,7 +115,7 @@ export default {
         },
         arrow: {
           enabled: this.withArrow,
-          element: this.withArrow ? this.elements().arrow : undefined
+          // element: this.withArrow ? this.elements().arrow : undefined
         },
         preventOverflow: {
           padding: 5,
@@ -184,7 +193,7 @@ export default {
     elements() {
       const { $refs } = this;
       return {
-        arrow: elFromRef($refs.arrow),
+        // arrow: elFromRef($refs.arrow),
         body: elFromRef($refs.body),
         trigger: elFromRef($refs.trigger)
       };
