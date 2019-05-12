@@ -25,7 +25,9 @@ export default {
   margin-left: 10px;
   max-width: 50%;
   flex-basis: 50%;
+  vertical-align: middle;
 }
+
 .label {
   text-align: right;
   flex-basis: 50%;

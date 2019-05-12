@@ -1,48 +1,48 @@
 // @ts-check
 
-import classes from "./../classes"
+import { normalizedClasses } from "./../"
 
 describe("classes", () => {
   it("returns null for empty array", () => {
-    expect(classes([])).toBeNull()
+    expect(normalizedClasses([])).toBeNull()
   })
 
   it("returns null for array with empty string", () => {
-    expect(classes([""])).toBeNull()
+    expect(normalizedClasses([""])).toBeNull()
   })
 
   it("returns null for array with null", () => {
-    expect(classes([null])).toBeNull()
+    expect(normalizedClasses([null])).toBeNull()
   })
   it("returns null for array with undefined", () => {
-    expect(classes([undefined])).toBeNull()
+    expect(normalizedClasses([undefined])).toBeNull()
   })
   it("returns null for array with just empty strings", () => {
-    expect(classes(["", "", ""])).toBeNull()
+    expect(normalizedClasses(["", "", ""])).toBeNull()
   })
   it("returns null for array with just nulls", () => {
-    expect(classes([null, null, null])).toBeNull()
+    expect(normalizedClasses([null, null, null])).toBeNull()
   })
   it("returns null for array with just undefined", () => {
-    expect(classes([undefined, undefined, undefined])).toBeNull()
+    expect(normalizedClasses([undefined, undefined, undefined])).toBeNull()
   })
   it("returns null for array with just undefined, empty strings or null", () => {
-    expect(classes([undefined, "", null, undefined, "", null])).toBeNull()
+    expect(normalizedClasses([undefined, "", null, undefined, "", null])).toBeNull()
   })
 
   it("returns removes null", () => {
-    expect(classes([null, "hello"])).toEqual(["hello"])
+    expect(normalizedClasses([null, "hello"])).toEqual(["hello"])
   })
 
   it("returns removes undefined", () => {
-    expect(classes([undefined, "hello"])).toEqual(["hello"])
+    expect(normalizedClasses([undefined, "hello"])).toEqual(["hello"])
   })
 
   it("returns removes empty string", () => {
-    expect(classes(["", "hello"])).toEqual(["hello"])
+    expect(normalizedClasses(["", "hello"])).toEqual(["hello"])
   })
 
   it("removes undefined, empty strings and null from array", () => {
-    expect(classes([undefined, "", null, "hello", undefined, "", null])).toEqual(["hello"])
+    expect(normalizedClasses([undefined, "", null, "hello", undefined, "", null])).toEqual(["hello"])
   })
 })

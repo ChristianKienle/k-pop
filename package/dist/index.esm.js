@@ -1,50 +1,27 @@
 
 /**
  * k-pop
- * version: 0.1.8,
+ * version: 0.2.0,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
 */
-import _regeneratorRuntime from '../node_modules/@babel/runtime/regenerator';
 import { Portal } from '@linusborg/vue-simple-portal';
 import Popper from 'popper.js';
 import __vue_normalize__ from 'vue-runtime-helpers/dist/normalize-component.js';
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-
-  if (info.done) {
-    resolve(value);
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
   } else {
-    Promise.resolve(value).then(_next, _throw);
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
   }
-}
 
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-
-      _next(undefined);
-    });
-  };
+  return _typeof(obj);
 }
 
 function _defineProperty(obj, key, value) {
@@ -81,6 +58,26 @@ function _objectSpread(target) {
   return target;
 }
 
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+}
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
 // @ts-check
 
 /**
@@ -110,26 +107,51 @@ var _classes = function _classes(classes) {
   return onlyClasses;
 };
 
-var isVueComponent = function isVueComponent(component) {
-  return component != null && component._isVue;
+// Adopted from https://raw.githubusercontent.com/egoist/vue-no-ssr
+// LICENSE: see LICENSE-no-ssr.text
+var NoSsr = {
+  name: "NoSsr",
+  functional: true,
+  props: {
+    placeholder: String,
+    placeholderTag: {
+      type: String,
+      default: "div"
+    }
+  },
+  render: function render(h, _ref) {
+    var parent = _ref.parent,
+        slots = _ref.slots,
+        props = _ref.props;
+
+    var _slots = slots(),
+        _slots$default = _slots.default,
+        defaultSlot = _slots$default === void 0 ? [] : _slots$default,
+        placeholderSlot = _slots.placeholder;
+
+    if (parent._isMounted) {
+      return defaultSlot;
+    }
+
+    parent.$once("hook:mounted", function () {
+      parent.$forceUpdate();
+    });
+
+    if (props.placeholderTag && (props.placeholder || placeholderSlot)) {
+      return h(props.placeholderTag, {
+        class: ["no-ssr-placeholder"]
+      }, props.placeholder || placeholderSlot);
+    } // Return a placeholder element for each child in the default slot
+    // Or if no children return a single placeholder
+
+
+    return defaultSlot.length > 0 ? defaultSlot.map(function () {
+      return h(false);
+    }) : h(false);
+  }
 };
 
-var elFromRef = (function (ref) {
-  if (ref == null) {
-
-    return;
-  }
-
-  if (isVueComponent(ref)) {
-    var el = ref.$el;
-
-    return el;
-  }
-
-  return ref;
-});
-
-var shortUuid = function shortUuid() {
+var shortId = (function () {
   var text = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -138,40 +160,50 @@ var shortUuid = function shortUuid() {
   }
 
   return text;
-};
-var VpArrow = {
+});
+
+var KTrigger = {
+  mounted: function mounted() {
+    this.$forceUpdate();
+  },
+  updated: function updated() {
+    this.$parent.popperReference = this.$el;
+    this.$parent.updatePopperInstance();
+  },
   render: function render(h) {
-    return h("span");
+    return this.$scopedSlots.default();
   }
-};
-var VpBody = {
-  render: function render(h) {
-    return h("div", [this.$slots.default]);
-  }
-};
-var VpTrigger = {
-  render: function render(h) {
-    return h("span", this.$slots.default);
-  }
-};
+}; // Because IE does not support Number.MAX_SAFE_INTEGER we hardcode
+// it's value here.
+
+var maxSafeInt = Math.pow(2, 53) - 1;
+var isBrowser = typeof window !== "undefined" && (typeof document === "undefined" ? "undefined" : _typeof(document)) !== undefined;
 var script = {
   name: "k-pop",
   components: {
+    KTrigger: KTrigger,
+    NoSsr: NoSsr,
     Portal: Portal,
-    VpTrigger: VpTrigger,
-    VpArrow: VpArrow,
-    VpBody: VpBody
+    VpArrow: {
+      render: function render(h) {
+        return h("span");
+      }
+    }
   },
   props: {
-    portalSelector: {
+    portalId: {
       default: function _default() {
-        return "#k-pop-portal-".concat(shortUuid());
+        return "k-pop-portal-".concat(shortId());
       },
       type: String
     },
     offset: {
       type: Number,
-      default: 5
+      default: 0
+    },
+    adjustsBodyWidth: {
+      type: Boolean,
+      default: false
     },
     theme: {
       type: String,
@@ -179,7 +211,11 @@ var script = {
     },
     bodyClass: {
       type: String,
-      default: null
+      default: ""
+    },
+    defaultBodyZIndex: {
+      type: [Number, String],
+      default: maxSafeInt
     },
     arrowClass: {
       type: String,
@@ -219,6 +255,22 @@ var script = {
     };
   },
   computed: {
+    slotProps: function slotProps() {
+      return {
+        show: this.show,
+        hide: this.hide,
+        toggle: this.toggle
+      };
+    },
+    stateThatRequiresPopBodyToUpdate: function stateThatRequiresPopBodyToUpdate() {
+      return {
+        visible: this.visible_,
+        bodyClasses: this.bodyClasses
+      };
+    },
+    portalSelector: function portalSelector() {
+      return "#".concat(this.portalId);
+    },
     // This computed prop simply references every prop that, when changed
     // should cause the Popper-instance to be recreated.
     stateThatRequiredPopperInstanceUpdate: function stateThatRequiredPopperInstanceUpdate() {
@@ -241,17 +293,27 @@ var script = {
       var theme = this.theme,
           bodyClass = this.bodyClass,
           withArrow = this.withArrow;
-      return _classes([bodyClass, theme ? "kpop-theme-".concat(this.theme, " kpop-body") : null, !withArrow ? "kpop-no-arrow" : null]);
+      var bodyClassAsArray = bodyClass.split(" ");
+      return _classes([].concat(_toConsumableArray(bodyClassAsArray), ["kpop-body", theme ? "kpop-theme-".concat(this.theme) : null, !withArrow ? "kpop-no-arrow" : null]));
     },
     // We merge the user defined modifiers with the modifiers required by FdPopper
     modifiers_: function modifiers_() {
       return _objectSpread({
+        onShow: {
+          enabled: this.adjustsBodyWidth,
+          order: 999,
+          fn: function fn(_ref) {
+            var instance = _ref.instance;
+            var popper = instance.popper,
+                reference = instance.reference;
+            popper.style.width = reference.style.width;
+          }
+        },
         flip: {
           enabled: this.flips
         },
         arrow: {
-          enabled: this.withArrow // element: this.withArrow ? this.elements().arrow : undefined
-
+          enabled: this.withArrow
         },
         preventOverflow: {
           padding: 5,
@@ -265,6 +327,15 @@ var script = {
     }
   },
   watch: {
+    adjustsBodyWidth: function adjustsBodyWidth() {
+      this.scheduleUpdate();
+    },
+    stateThatRequiresPopBodyToUpdate: {
+      deep: true,
+      handler: function handler() {
+        this.updatePopBodyElement();
+      }
+    },
     stateThatRequiredPopperInstanceUpdate: {
       deep: true,
       handler: function handler() {
@@ -275,46 +346,49 @@ var script = {
       this.visible_ = _visible;
     }
   },
+  beforeMount: function beforeMount() {
+    if (!isBrowser) {
+      return;
+    }
+
+    var popBody = document.createElement("DIV");
+    popBody.id = this.portalId;
+    this.popBody = popBody;
+    document.querySelector("body").appendChild(popBody);
+    this.updatePopBodyElement();
+  },
   beforeDestroy: function beforeDestroy() {
     this.destroyPopperInstance();
-
-    if (!this.hasCustomTriggerLogic) {
-      this.elements().trigger.removeEventListener("click", this.toggle, false);
-    }
   },
-  mounted: function () {
-    var _mounted = _asyncToGenerator(
-    /*#__PURE__*/
-    _regeneratorRuntime.mark(function _callee() {
-      return _regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.next = 2;
-              return this.$nextTick();
-
-            case 2:
-              this.updatePopperInstance();
-
-              if (!this.hasCustomTriggerLogic) {
-                this.elements().trigger.addEventListener("click", this.toggle, false);
-              }
-
-            case 4:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, this);
-    }));
-
-    function mounted() {
-      return _mounted.apply(this, arguments);
-    }
-
-    return mounted;
-  }(),
+  mounted: function mounted() {
+    this.$forceUpdate();
+  },
   methods: {
+    handleClickOnTrigger: function handleClickOnTrigger() {
+      if (this.hasCustomTriggerLogic) {
+        return;
+      }
+
+      this.toggle();
+    },
+    updatePopBodyElement: function updatePopBodyElement() {
+      var popBody = this.popBody,
+          bodyClasses = this.bodyClasses;
+      var classList = popBody.classList;
+      classList.forEach(function (existingClass) {
+        if (bodyClasses.indexOf(existingClass) < 0) {
+          classList.remove(existingClass);
+        }
+      });
+      bodyClasses.forEach(function (bodyClass) {
+        if (!classList.contains(bodyClass)) {
+          classList.add(bodyClass);
+        }
+      });
+      popBody.style.display = this.visible_ ? "block" : "none";
+      popBody.style.zIndex = this.defaultBodyZIndex;
+      popBody.setAttribute("aria-hidden", String(!this.visible_));
+    },
     destroyPopperInstance: function destroyPopperInstance() {
       if (!this.popperInstance) {
         return;
@@ -325,7 +399,12 @@ var script = {
     },
     updatePopperInstance: function updatePopperInstance() {
       this.destroyPopperInstance();
-      var reference = this.elements().trigger || this.trigger;
+
+      if (this.popperReference == null) {
+        return;
+      }
+
+      var reference = this.popperReference;
       var body = this.elements().body;
       var options = {
         modifiers: this.modifiers_,
@@ -355,9 +434,7 @@ var script = {
     elements: function elements() {
       var $refs = this.$refs;
       return {
-        // arrow: elFromRef($refs.arrow),
-        body: elFromRef($refs.body),
-        trigger: elFromRef($refs.trigger)
+        body: this.popBody
       };
     }
   }
@@ -374,33 +451,18 @@ var __vue_render__ = function __vue_render__() {
 
   var _c = _vm._self._c || _h;
 
-  return _c('div', [_c('vp-trigger', {
-    ref: "trigger"
-  }, [_vm._t("trigger", null, {
-    "show": _vm.show,
-    "hide": _vm.hide,
-    "toggle": _vm.toggle
-  })], 2), _vm._v(" "), _c('portal', {
+  return _c('div', [_c('k-trigger', {
+    ref: "trigger",
+    nativeOn: {
+      "click": function click($event) {
+        return _vm.handleClickOnTrigger($event);
+      }
+    }
+  }, [_vm._t("trigger", null, null, _vm.slotProps)], 2), _vm._v(" "), _c('no-ssr', [_c('portal', {
     attrs: {
       "selector": _vm.portalSelector
     }
-  }, [_c('vp-body', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.visible_,
-      expression: "visible_"
-    }],
-    ref: "body",
-    class: _vm.bodyClasses,
-    attrs: {
-      "aria-hidden": String(!_vm.visible_)
-    }
-  }, [_vm._t("default", null, {
-    "show": _vm.show,
-    "hide": _vm.hide,
-    "toggle": _vm.toggle
-  }), _vm._v(" "), _c('vp-arrow', {
+  }, [_vm._t("default", null, null, _vm.slotProps), _vm._v(" "), _c('vp-arrow', {
     class: _vm.arrowClasses,
     attrs: {
       "x-arrow": ""

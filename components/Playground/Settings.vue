@@ -1,6 +1,6 @@
 <template>
   <div class="settings">
-    <Playground-Settings-Row label="Placement">
+    <SettingRow label="Placement">
       <select v-model="placement">
         <option
           v-for="aPlacement in placements"
@@ -8,9 +8,9 @@
           :key="aPlacement"
         >{{aPlacement}}</option>
       </select>
-    </Playground-Settings-Row>
+    </SettingRow>
 
-    <Playground-Settings-Row label="Overflow">
+    <SettingRow label="Overflow">
       <select v-model="overflowContainer">
         <option
           v-for="container in overflowContainers"
@@ -18,18 +18,27 @@
           :key="container"
         >{{container}}</option>
       </select>
-    </Playground-Settings-Row>
+    </SettingRow>
 
-    <Playground-Settings-Row label="Theme">
+    <SettingRow label="Theme">
       <select v-model="theme">
         <option v-for="aTheme in themes" :value="aTheme" :key="aTheme">{{aTheme}}</option>
       </select>
-    </Playground-Settings-Row>
-    <Playground-Settings-Row label="Offset">
-        <input type="range" v-model.number="offset" min="0" max="100" value="10">
-    </Playground-Settings-Row>
+    </SettingRow>
+    <SettingRow label="Offset">
+      <div style="display: flex;">
+        <input type="range" v-model.number="offset" min="0" max="100" value="0">
+        <label style="">{{offset}}px</label>
+      </div>
+    </SettingRow>
+    <SettingRow label="Trigger Width">
+      <div style="display: flex;">
+        <input type="range" v-model.number="triggerWidth" @input="$emit('update:triggerWidth', $event.target.value)" min="200" max="400" value="250">
+        <label>{{triggerWidth}}px</label>
+      </div>
+    </SettingRow>
 
-    <Playground-Settings-Row label="Options">
+    <SettingRow label="Options">
       <label>
         <input type="checkbox" v-model="flips">Flip
       </label>
@@ -38,13 +47,22 @@
         <input type="checkbox" v-model="withArrow">Arrow
       </label>
       <br />
-      <slot/>
-    </Playground-Settings-Row>
+      <label>
+        <input type="checkbox" v-model="adjustsBodyWidth">Adjust Body Width
+      </label>
+      <br />
+      <label>
+        <input type="checkbox" v-model="useNativeButton" @change="$emit('update:useNativeButton', $event.target.checked)">Native Button
+      </label>
+    </SettingRow>
   </div>
 </template>
 
 <script>
+import SettingRow from "./settings/row.vue"
+
 export default {
+  components: { SettingRow },
   watch: {
     kPopProps(newProps) {
       this.$emit("changed", newProps);
@@ -63,6 +81,7 @@ export default {
       };
       return {
         modifiers,
+        adjustsBodyWidth: this.adjustsBodyWidth,
         offset: this.offset,
         flips: this.flips,
         placement: this.placement,
@@ -73,7 +92,10 @@ export default {
   },
   data() {
     return {
-      offset: 10,
+      adjustsBodyWidth: false,
+      triggerWidth: 250,
+      useNativeButton: false,
+      offset: 0,
       theme: "clean",
       overflowContainer: "scrollParent",
       placement: "bottom",
@@ -101,6 +123,10 @@ export default {
 </script>
 
 <style scoped>
+input {
+  margin: 0;
+  margin-right: 5px;
+}
 .settings {
   display: flex;
   flex-direction: column;

@@ -8,16 +8,18 @@
   $arrow-color,
   $arrow-border-color) {
   $arrow-width-half: $arrow-width / 2;
-
   background-color: $bg-color;
   border: 1px solid $border-color;
   border-radius: $border-radius;
   box-shadow: $shadow;
+  // without that, the padding applied below would change the size of the body.
+  // This makes it harder to have the body the same width than the reference element.
+  box-sizing: border-box;
   padding: $padding;
   @content;
 
   &.kpop-no-arrow {
-    margin: 0 !important;
+    margin: 0 !important; // sass-lint:disable-line no-important
 
     .kpop-arrow {
       display: none;

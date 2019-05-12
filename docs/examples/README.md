@@ -8,16 +8,26 @@ title: Examples
 
 This is the a classical *Hello World* example:
 
-<iframe width="100%" height="300" src="//jsfiddle.net/christiankienle/vj64hzra/35/embedded/result,html/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+::: example hello-world
+<<< @/components/demo/hello-world.vue
+:::
+
+::: tip
+The example above is not using any theme or custom styles. For this reason it looks like a bit boring. Most of the following examples are using a theme.
+:::
 
 ## Close on Click Inside
 
 This example shows you how to add a *close*-button inside the popover.
 
-<iframe width="100%" height="300" src="//jsfiddle.net/christiankienle/peczxt8y/9/embedded/result,html/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+::: example click-inside
+<<< @/components/demo/click-inside.vue
+:::
 
-## Show on Hover <Badge text="helo"/>
+## Show on Hover
 
 {{ $page.lib }} is very flexible: This example shows how to show the popover on `mouseenter` and `mouseleave`. The result is a very simple tooltip.
 
-<iframe width="100%" height="300" src="//jsfiddle.net/christiankienle/pnhaLue2/5/embedded/result,html/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+::: example custom-trigger
+<<< @/components/demo/custom-trigger.vue
+:::

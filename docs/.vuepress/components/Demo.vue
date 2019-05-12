@@ -1,6 +1,5 @@
 <template>
   <div>demo
-
     <KPop theme="clean">
       <template #trigger="{toggle}">
       <Trigger @click="toggle">hi</Trigger>

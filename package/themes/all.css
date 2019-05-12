@@ -3,6 +3,7 @@
   border: 1px solid #1d2935;
   border-radius: 5px;
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
   padding: 15px;
   color: #fff; }
   .kpop-theme-dark.kpop-body.kpop-no-arrow {
@@ -76,6 +77,7 @@
   border: 1px solid #f1f3f8;
   border-radius: 5px;
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
   padding: 15px; }
   .kpop-theme-clean.kpop-body.kpop-no-arrow {
     margin: 0 !important; }
@@ -148,6 +150,7 @@
   border: 1px solid #f1f3f8;
   border-radius: 8px;
   box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
   padding: 15px; }
   .kpop-theme-big-arrow.kpop-body.kpop-no-arrow {
     margin: 0 !important; }
@@ -220,6 +223,7 @@
   border: 1px solid #f1f3f8;
   border-radius: 5px;
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
   padding: 15px; }
   .kpop-theme-v2.kpop-body.kpop-no-arrow {
     margin: 0 !important; }

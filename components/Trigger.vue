@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: "trigger",
   props: {
     native: { type: Boolean, default: false }
   },

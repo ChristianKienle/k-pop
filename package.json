@@ -1,11 +1,10 @@
 {
   "name": "k-pop",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "build:and:release": "npm run build && cd package && npm publish",
-    "serve:demo": "vue-cli-service serve demo/main.js",
-    "serve": "vue-cli-service serve",
+    "serve:demo": "vue-cli-service serve components/demo/index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "build:bili": "bili --format umd --format umd-min --format es --module-name KPop --env.NODE_ENV production -d package/dist",
@@ -35,6 +34,7 @@
     "@vue/test-utils": "1.0.0-beta.29",
     "@vuepress/plugin-active-header-links": "^1.0.0-alpha.44",
     "@vuepress/plugin-clean-urls": "^1.0.0-alpha.44",
+    "@vuepress/plugin-register-components": "^1.0.0-alpha.47",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
@@ -50,9 +50,13 @@
     "sass-loader": "^7.1.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "typescript": "^3.4.5",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
     "vue-template-compiler": "^2.6.10",
     "vuepress": "^1.0.0-alpha.44"
+  },
+  "dependencies": {
+    "vuepress-plugin-container": "^2.0.1"
   }
 }

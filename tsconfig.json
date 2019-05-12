@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
+    "checkJs": false,
     "allowJs": true,
+    "noImplicitAny": false,
     "noEmit": true,
     "resolveJsonModule": true,
     "target": "esnext",
     "module": "esnext",
-    "strict": true,
-    "strictNullChecks": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
@@ -32,7 +32,8 @@
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.js"
+    "src/**/*.js",
+    "vendor.d.ts"
   ],
   "exclude": [
     "node_modules"
