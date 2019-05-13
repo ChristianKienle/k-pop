@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import SettingRow from "./settings/row.vue"
+import SettingRow from "./settings/k-row.vue"
 
 export default {
   components: { SettingRow },

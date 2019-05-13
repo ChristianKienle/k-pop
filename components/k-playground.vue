@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import Settings from "./playground/settings.vue"
-import Trigger from "./trigger.vue"
+import Settings from "./playground/k-settings.vue"
+import Trigger from "./k-trigger.vue"
 
 export default {
   name: "playground",

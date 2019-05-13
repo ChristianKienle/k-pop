@@ -1,1 +1,1 @@
-<playground />
+<k-playground />

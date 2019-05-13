@@ -67,7 +67,7 @@ import "./../node_modules/@ckienle/k-pop/themes/clean.css"
 
 ## Playground
 
-<playground />
+<k-playground />
 
 ## Usage Notes
 

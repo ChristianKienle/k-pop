@@ -1,8 +1,8 @@
 <template>
   <div>
-    <k-trigger ref="trigger" @click.native="handleClickOnTrigger">
+    <KPopTrigger ref="trigger" @click.native="handleClickOnTrigger">
       <slot name="trigger" v-bind="slotProps" />
-    </k-trigger>
+    </KPopTrigger>
     <no-ssr>
       <portal :selector="portalSelector">
         <slot v-bind="slotProps" />
@@ -17,7 +17,7 @@ import { shortId, NoSsr, normalizedClasses } from "./helper"
 import { Portal } from "@linusborg/vue-simple-portal"
 import Popper from "popper.js"
 
-const KTrigger = {
+const KPopTrigger = {
   mounted() {
     this.$forceUpdate();
   },
@@ -38,7 +38,7 @@ const isBrowser = typeof window !== "undefined" && typeof document !== undefined
 export default {
   name: "k-pop",
   components: {
-    KTrigger,
+    KPopTrigger,
     NoSsr,
     Portal,
     VpArrow: { render: h => h("span") }

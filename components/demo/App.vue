@@ -1,12 +1,12 @@
 <template>
-  <playground />
+  <k-playground />
 </template>
 
 <script>
-import Playground from "./../playground.vue"
+import KPlayground from "./../k-playground.vue"
 
 export default {
-  components: { Playground },
+  components: { KPlayground },
 }
 </script>
 

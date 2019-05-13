@@ -1,7 +1,7 @@
 
 /**
  * k-pop
- * version: 0.2.0,
+ * version: 0.2.1,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
@@ -2959,7 +2959,7 @@
   Popper.placements = placements;
   Popper.Defaults = Defaults;
 
-  var KTrigger = {
+  var KPopTrigger = {
     mounted: function mounted() {
       this.$forceUpdate();
     },
@@ -2978,7 +2978,7 @@
   var script = {
     name: "k-pop",
     components: {
-      KTrigger: KTrigger,
+      KPopTrigger: KPopTrigger,
       NoSsr: NoSsr,
       Portal: Portal,
       VpArrow: {
@@ -3333,7 +3333,7 @@
 
     var _c = _vm._self._c || _h;
 
-    return _c('div', [_c('k-trigger', {
+    return _c('div', [_c('KPopTrigger', {
       ref: "trigger",
       nativeOn: {
         "click": function click($event) {

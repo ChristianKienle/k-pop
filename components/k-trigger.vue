@@ -18,7 +18,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .kpop-button {
   display: inline-block;
   border: none;

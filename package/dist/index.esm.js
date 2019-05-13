@@ -1,7 +1,7 @@
 
 /**
  * k-pop
- * version: 0.2.0,
+ * version: 0.2.1,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
@@ -162,7 +162,7 @@ var shortId = (function () {
   return text;
 });
 
-var KTrigger = {
+var KPopTrigger = {
   mounted: function mounted() {
     this.$forceUpdate();
   },
@@ -181,7 +181,7 @@ var isBrowser = typeof window !== "undefined" && (typeof document === "undefined
 var script = {
   name: "k-pop",
   components: {
-    KTrigger: KTrigger,
+    KPopTrigger: KPopTrigger,
     NoSsr: NoSsr,
     Portal: Portal,
     VpArrow: {
@@ -451,7 +451,7 @@ var __vue_render__ = function __vue_render__() {
 
   var _c = _vm._self._c || _h;
 
-  return _c('div', [_c('k-trigger', {
+  return _c('div', [_c('KPopTrigger', {
     ref: "trigger",
     nativeOn: {
       "click": function click($event) {
