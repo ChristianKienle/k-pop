@@ -1,5 +1,5 @@
 <template>
-  <k-pop with-arrow theme="clean">
+  <k-pop boundary="viewport" with-arrow theme="clean">
     <button slot="trigger">Show Popover</button>
 
     <template #default="{hide}">

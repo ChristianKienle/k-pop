@@ -1,7 +1,7 @@
 
 /**
  * k-pop
- * version: 0.3.0,
+ * version: 0.3.1,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
@@ -333,7 +333,7 @@ var script = {
         },
         preventOverflow: {
           enabled: true,
-          padding: 5,
+          escapeWithReference: true,
           boundariesElement: this.boundary
         },
         offset: {

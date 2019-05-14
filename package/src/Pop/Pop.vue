@@ -152,7 +152,7 @@ export default {
         arrow: { enabled: this.withArrow },
         preventOverflow: {
           enabled: true,
-          padding: 5,
+          escapeWithReference: true,
           boundariesElement: this.boundary
         },
         offset: {
