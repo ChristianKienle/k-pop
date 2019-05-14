@@ -1,7 +1,7 @@
 
 /**
  * k-pop
- * version: 0.3.1,
+ * version: 0.3.2,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
@@ -3065,6 +3065,7 @@
     computed: {
       slotProps: function slotProps() {
         return {
+          visible: this.visible_,
           show: this.show,
           hide: this.hide,
           toggle: this.toggle

@@ -88,6 +88,7 @@ export default {
   computed: {
     slotProps() {
       return {
+        visible: this.visible_,
         show: this.show,
         hide: this.hide,
         toggle: this.toggle
