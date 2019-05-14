@@ -5,7 +5,7 @@
   "scripts": {
     "build:and:release": "npm run build && cd package && npm publish",
     "serve:demo": "vue-cli-service serve components/demo/index.js",
-    "docs:dev": "vuepress dev docs",
+    "docs:dev": "vuepress dev docs --no-cache",
     "docs:build": "vuepress build docs",
     "build:bili": "bili --format umd --format umd-min --format es --module-name KPop --env.NODE_ENV production -d package/dist",
     "build": "rimraf -r package/dist && rimraf -r package/src && rimraf package/themes && npm run build:themes && npm run build:bili && cp -R ./src package/src && cp ./LICENSE package/LICENSE",

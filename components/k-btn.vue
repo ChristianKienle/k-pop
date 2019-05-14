@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "trigger",
+  name: "k-btn",
   props: {
     native: { type: Boolean, default: false }
   },
@@ -20,6 +20,7 @@ export default {
 
 <style scoped>
 .kpop-button {
+  box-sizing: border-box;
   display: inline-block;
   border: none;
   padding: 0.7rem 1rem;

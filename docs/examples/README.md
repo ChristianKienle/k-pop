@@ -31,3 +31,11 @@ This example shows you how to add a *close*-button inside the popover.
 ::: example custom-trigger
 <<< @/components/demo/custom-trigger.vue
 :::
+
+## Width Adjustment
+
+By setting the `adjusts-body-width`-prop to `true` you tell {{ $page.lib }} to make the popover body the same width as the trigger element/component. The popover below has the same width as the button.
+
+::: example width-adjustment
+<<< @/components/demo/width-adjustment.vue
+:::

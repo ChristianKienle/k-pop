@@ -17,18 +17,8 @@ module.exports = {
   base: "/k-pop/",
   plugins: [
     ["container", {
-      type: "right",
-      defaultTitle: "",
-    }],
-    ["container", {
       type: "example",
-      before: info => `
-        <div class="example">
-        <div class="example__rendered">
-          <demo-${info} />
-        </div>
-        `,
-      after: "</div>",
+      before: info => `<div class="example__rendered"><demo-${info} /></div>`
     }],
     [
       "@vuepress/register-components", {

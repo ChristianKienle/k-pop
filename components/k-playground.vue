@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Settings
+    <k-settings
       @changed="kPopProps = $event"
       @update:useNativeButton="useNativeButton = $event"
       @update:triggerWidth="triggerWidth = $event"
@@ -8,28 +8,32 @@
 
     <div class="outer" ref="scrollcontainer">
       <div class="inner" ref="contentview">
-          <KPop v-bind="kPopProps">
-            <template #trigger="{toggle}">
-              <Trigger :style="triggerStyle" :native="useNativeButton" @click="toggle">Show Popover</Trigger>
-            </template>
+        <k-pop v-bind="kPopProps">
+          <template #trigger="{toggle}">
+            <k-btn
+              :style="triggerStyle"
+              :native="useNativeButton"
+              @click="toggle"
+            >Show Popover</k-btn>
+          </template>
             <div class="title">Sample Popover Title</div>
             <div class="body">
               <p>Not like the brazen giant of Greek fame,</p>
               <p>With conquering limbs astride from land to land.</p>
-          </div>
-          </KPop>
+            </div>
+        </k-pop>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Settings from "./playground/k-settings.vue"
-import Trigger from "./k-trigger.vue"
+import KSettings from "./playground/k-settings.vue"
+import KBtn from "./k-btn.vue"
 
 export default {
   name: "playground",
-  components: { Trigger, Settings },
+  components: { KBtn, KSettings },
   data: () => ({
     useNativeButton: false,
     triggerWidth: 250,
@@ -79,6 +83,10 @@ export default {
   margin-bottom: 20px;
   font-size: 1.3rem;
   filter: saturate(150%);
+}
+
+p {
+  margin: 0;
 }
 
 .body {

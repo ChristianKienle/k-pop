@@ -13,5 +13,6 @@ $arrow-border-color: darken($border-color, 5%);
   $body-shadow: 0 0 10px 3px rgba(0, 0, 0, .12),
   $arrow-width: 15px,
   $arrow-color: $bg-color,
-  $arrow-border-color: $arrow-border-color
+  $arrow-border-color: $arrow-border-color,
+  $animation-duration: .25s
 );

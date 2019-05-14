@@ -2,7 +2,7 @@
   <div>demo
     <KPop theme="clean">
       <template #trigger="{toggle}">
-      <Trigger @click="toggle">hi</Trigger>
+      <k-btn @click="toggle">hi</k-btn>
       </template>
         hello
     </KPop>

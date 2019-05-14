@@ -112,24 +112,39 @@
   $body-shadow,
   $arrow-width,
   $arrow-color,
-  $arrow-border-color
+  $arrow-border-color,
+  $animation-duration: .25s
   ) {
-  .kpop-theme-#{$name}.kpop-body {
-    @include kp-themed-body(
-      $body-padding,
-      $body-bg-color,
-      $body-border-color,
-      $body-border-radius,
-      $body-shadow,
-      $arrow-width,
-      $arrow-color,
-      $arrow-border-color
-    ) {
-      @content;
+  .kpop-theme-#{$name} {
+    &[aria-hidden='true'] {
+      opacity: 0;
+      transition: opacity $animation-duration, visibility $animation-duration;
+      visibility: hidden;
     }
-    @include kp-themed-arrow;
 
+    &[aria-hidden='false'] {
+      opacity: 1;
+      transition: opacity $animation-duration;
+      visibility: visible;
+    }
+
+    &.kpop-body {
+      @include kp-themed-body(
+        $body-padding,
+        $body-bg-color,
+        $body-border-color,
+        $body-border-radius,
+        $body-shadow,
+        $arrow-width,
+        $arrow-color,
+        $arrow-border-color
+      ) {
+        @content;
+      }
+      @include kp-themed-arrow;
+    }
   }
+
 }
 
 @mixin kp-themed-arrow {
