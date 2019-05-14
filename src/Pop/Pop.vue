@@ -43,9 +43,10 @@ const KPopTrigger = {
 // it's value here.
 const maxSafeInt = Math.pow(2, 53) - 1
 const isBrowser = typeof window !== "undefined" && typeof document !== undefined
+import { isValidBoundary, defaultBoundary } from "./boundary"
 
 export default {
-  name: "k-pop",
+  name: "KPop",
   components: {
     KPopTrigger,
     NoSsr,
@@ -56,6 +57,11 @@ export default {
     portalId: { default: () => `k-pop-portal-${shortId()}`, type: String },
     offset: { type: Number, default: 0 },
     adjustsBodyWidth: { type: Boolean, default: false },
+    boundary: {
+      type: String,
+      default: defaultBoundary,
+      validator: isValidBoundary
+    },
     theme: { type: String, default: null },
     bodyClass: { type: String, default: "" },
     defaultBodyZIndex: { type: [Number, String], default: maxSafeInt },
@@ -128,11 +134,15 @@ export default {
       return {
         adjustsBodyWidth: {
           enabled: this.adjustsBodyWidth,
-          order: 9999,
+          order: 0,
           fn(data) {
-            const { instance, offsets } = data;
+            const { instance, offsets } = data
             // we cant use style.width because it may be something like 100%
-            instance.popper.style.width = instance.reference.clientWidth + "px";
+            const referenceWidth = instance.reference.clientWidth
+            const delta = referenceWidth - offsets.popper.width
+            instance.popper.style.width = referenceWidth + "px"
+            offsets.popper.width = referenceWidth
+            offsets.popper.left = offsets.popper.left - (0.5 * delta)
             return data
           }
         },
@@ -141,8 +151,9 @@ export default {
         },
         arrow: { enabled: this.withArrow },
         preventOverflow: {
+          enabled: true,
           padding: 5,
-          boundariesElement: "scrollParent"
+          boundariesElement: this.boundary
         },
         offset: {
           enabled: true,

@@ -18,7 +18,8 @@ module.exports = {
   plugins: [
     ["container", {
       type: "example",
-      before: info => `<div class="example__rendered"><demo-${info} /></div>`
+      before: info => `<div class="example__rendered"><demo-${info} /></div>`,
+      after: ''
     }],
     [
       "@vuepress/register-components", {

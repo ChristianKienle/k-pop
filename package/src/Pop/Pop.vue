@@ -1,12 +1,21 @@
 <template>
   <div>
-    <KPopTrigger ref="trigger" @click.native="handleClickOnTrigger">
-      <slot name="trigger" v-bind="slotProps" />
+    <KPopTrigger
+      ref="trigger"
+      @click.native="handleClickOnTrigger"
+    >
+      <slot
+        name="trigger"
+        v-bind="slotProps"
+      />
     </KPopTrigger>
     <no-ssr>
       <portal :selector="portalSelector">
         <slot v-bind="slotProps" />
-        <vp-arrow x-arrow :class="arrowClasses" />
+        <vp-arrow
+          x-arrow
+          :class="arrowClasses"
+        />
       </portal>
     </no-ssr>
   </div>
@@ -19,14 +28,14 @@ import Popper from "popper.js"
 
 const KPopTrigger = {
   mounted() {
-    this.$forceUpdate();
+    this.$forceUpdate()
   },
   updated() {
-    this.$parent.popperReference = this.$el;
-    this.$parent.updatePopperInstance();
+    this.$parent.popperReference = this.$el
+    this.$parent.updatePopperInstance()
   },
   render(h) {
-    return this.$scopedSlots.default();
+    return this.$scopedSlots.default()
   }
 }
 
@@ -34,9 +43,10 @@ const KPopTrigger = {
 // it's value here.
 const maxSafeInt = Math.pow(2, 53) - 1
 const isBrowser = typeof window !== "undefined" && typeof document !== undefined
+import { isValidBoundary, defaultBoundary } from "./boundary"
 
 export default {
-  name: "k-pop",
+  name: "KPop",
   components: {
     KPopTrigger,
     NoSsr,
@@ -47,6 +57,11 @@ export default {
     portalId: { default: () => `k-pop-portal-${shortId()}`, type: String },
     offset: { type: Number, default: 0 },
     adjustsBodyWidth: { type: Boolean, default: false },
+    boundary: {
+      type: String,
+      default: defaultBoundary,
+      validator: isValidBoundary
+    },
     theme: { type: String, default: null },
     bodyClass: { type: String, default: "" },
     defaultBodyZIndex: { type: [Number, String], default: maxSafeInt },
@@ -106,7 +121,7 @@ export default {
     },
     bodyClasses() {
       const { theme, bodyClass, withArrow } = this
-      const bodyClassAsArray = bodyClass.split(" ");
+      const bodyClassAsArray = bodyClass.split(" ")
       return normalizedClasses([
         ...bodyClassAsArray,
         "kpop-body",
@@ -117,12 +132,18 @@ export default {
     // We merge the user defined modifiers with the modifiers required by FdPopper
     modifiers_() {
       return {
-        onShow: {
+        adjustsBodyWidth: {
           enabled: this.adjustsBodyWidth,
-          order: 999,
-          fn({instance}) {
-            const { popper, reference } = instance;
-            popper.style.width = reference.style.width;
+          order: 0,
+          fn(data) {
+            const { instance, offsets } = data
+            // we cant use style.width because it may be something like 100%
+            const referenceWidth = instance.reference.clientWidth
+            const delta = referenceWidth - offsets.popper.width
+            instance.popper.style.width = referenceWidth + "px"
+            offsets.popper.width = referenceWidth
+            offsets.popper.left = offsets.popper.left - (0.5 * delta)
+            return data
           }
         },
         flip: {
@@ -130,8 +151,9 @@ export default {
         },
         arrow: { enabled: this.withArrow },
         preventOverflow: {
+          enabled: true,
           padding: 5,
-          boundariesElement: "scrollParent"
+          boundariesElement: this.boundary
         },
         offset: {
           enabled: true,
@@ -143,7 +165,7 @@ export default {
   },
   watch: {
     adjustsBodyWidth() {
-      this.scheduleUpdate();
+      this.updatePopperInstance()
     },
     stateThatRequiresPopBodyToUpdate: {
       deep: true,
@@ -165,32 +187,32 @@ export default {
     if (!isBrowser) {
       return
     }
-    const popBody = document.createElement("DIV")
-    popBody.id = this.portalId
-    this.popBody = popBody
-    document.querySelector("body").appendChild(popBody)
+    const portalElement = document.createElement("DIV")
+    portalElement.id = this.portalId
+    this.portalElement = portalElement
+    document.querySelector("body").appendChild(portalElement)
     this.updatePopBodyElement()
   },
   beforeDestroy() {
     this.destroyPopperInstance()
   },
   mounted() {
-    this.$forceUpdate();
+    this.$forceUpdate()
   },
   methods: {
     handleClickOnTrigger() {
       if(this.hasCustomTriggerLogic) {
         return
       }
-      this.toggle();
+      this.toggle()
     },
     updatePopBodyElement() {
       const {
-        popBody,
+        portalElement,
         bodyClasses
       } = this
 
-      const { classList } = popBody
+      const { classList } = portalElement
 
       classList.forEach(existingClass => {
         if (bodyClasses.indexOf(existingClass) < 0) {
@@ -203,9 +225,14 @@ export default {
           classList.add(bodyClass)
         }
       })
-      popBody.style.display = this.visible_ ? "block" : "none"
-      popBody.style.zIndex = this.defaultBodyZIndex
-      popBody.setAttribute("aria-hidden", String(!this.visible_))
+      portalElement.style.zIndex = this.defaultBodyZIndex
+      portalElement.setAttribute("aria-hidden", String(!this.visible_))
+
+      // Only adjust the display if we have no theme set. When using a theme it is it's responsibility
+      // to adjust the visibility.
+      if(this.theme == null) {
+        portalElement.style.display = this.visible_ ? "block" : "none"
+      }
     },
     destroyPopperInstance() {
       if (!this.popperInstance) {
@@ -216,16 +243,14 @@ export default {
     },
     updatePopperInstance() {
       this.destroyPopperInstance()
-      if(this.popperReference == null) {
-        return;
+
+      const { placement, modifiers_: modifiers, popperReference, portalElement } = this
+      if(popperReference == null) {
+        return
       }
-      const reference = this.popperReference;
-      const body = this.elements().body
-      const options = {
-        modifiers: this.modifiers_,
-        placement: this.placement
-      }
-      this.popperInstance = new Popper(reference, body, options)
+
+      const options = { modifiers, placement }
+      this.popperInstance = new Popper(popperReference, portalElement, options)
     },
     scheduleUpdate() {
       if (this.popperInstance) {
@@ -245,12 +270,6 @@ export default {
     },
     toggle() {
       this.setVisible(!this.visible_)
-    },
-    elements() {
-      const { $refs } = this
-      return {
-        body: this.popBody,
-      }
     }
   }
 }

@@ -10,13 +10,13 @@
       </select>
     </SettingRow>
 
-    <SettingRow label="Overflow">
-      <select v-model="overflowContainer">
+    <SettingRow label="Boundary">
+      <select v-model="boundary">
         <option
-          v-for="container in overflowContainers"
-          :value="container"
-          :key="container"
-        >{{container}}</option>
+          v-for="availableBoundary in boundaries"
+          :value="availableBoundary"
+          :key="availableBoundary"
+        >{{availableBoundary}}</option>
       </select>
     </SettingRow>
 
@@ -70,17 +70,8 @@ export default {
   },
   computed: {
     kPopProps() {
-      const modifiers = {
-        preventOverflow: {
-          enabled: this.overflowContainer !== "disabled",
-          boundariesElement:
-            this.overflowContainer === "disabled"
-              ? "scrollParent"
-              : this.overflowContainer
-        }
-      };
       return {
-        modifiers,
+        boundary: this.boundary,
         adjustsBodyWidth: this.adjustsBodyWidth,
         offset: this.offset,
         flips: this.flips,
@@ -97,11 +88,11 @@ export default {
       useNativeButton: false,
       offset: 0,
       theme: "clean",
-      overflowContainer: "scrollParent",
+      boundary: "scrollParent",
       placement: "bottom",
       flips: true,
       withArrow: true,
-      overflowContainers: ["disabled", "scrollParent", "window", "viewport"],
+      boundaries: ["scrollParent", "window", "viewport"],
       placements: [
         "top-start",
         "top",

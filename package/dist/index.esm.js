@@ -1,7 +1,7 @@
 
 /**
  * k-pop
- * version: 0.2.1,
+ * version: 0.3.0,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
@@ -162,6 +162,12 @@ var shortId = (function () {
   return text;
 });
 
+var boundaries = ["scrollParent", "viewport", "window"];
+var defaultBoundary = boundaries[0];
+var isValidBoundary = function isValidBoundary(value) {
+  return boundaries.indexOf(value) >= 0;
+};
+
 var KPopTrigger = {
   mounted: function mounted() {
     this.$forceUpdate();
@@ -179,7 +185,7 @@ var KPopTrigger = {
 var maxSafeInt = Math.pow(2, 53) - 1;
 var isBrowser = typeof window !== "undefined" && (typeof document === "undefined" ? "undefined" : _typeof(document)) !== undefined;
 var script = {
-  name: "k-pop",
+  name: "KPop",
   components: {
     KPopTrigger: KPopTrigger,
     NoSsr: NoSsr,
@@ -204,6 +210,11 @@ var script = {
     adjustsBodyWidth: {
       type: Boolean,
       default: false
+    },
+    boundary: {
+      type: String,
+      default: defaultBoundary,
+      validator: isValidBoundary
     },
     theme: {
       type: String,
@@ -299,14 +310,19 @@ var script = {
     // We merge the user defined modifiers with the modifiers required by FdPopper
     modifiers_: function modifiers_() {
       return _objectSpread({
-        onShow: {
+        adjustsBodyWidth: {
           enabled: this.adjustsBodyWidth,
-          order: 999,
-          fn: function fn(_ref) {
-            var instance = _ref.instance;
-            var popper = instance.popper,
-                reference = instance.reference;
-            popper.style.width = reference.style.width;
+          order: 0,
+          fn: function fn(data) {
+            var instance = data.instance,
+                offsets = data.offsets; // we cant use style.width because it may be something like 100%
+
+            var referenceWidth = instance.reference.clientWidth;
+            var delta = referenceWidth - offsets.popper.width;
+            instance.popper.style.width = referenceWidth + "px";
+            offsets.popper.width = referenceWidth;
+            offsets.popper.left = offsets.popper.left - 0.5 * delta;
+            return data;
           }
         },
         flip: {
@@ -316,8 +332,9 @@ var script = {
           enabled: this.withArrow
         },
         preventOverflow: {
+          enabled: true,
           padding: 5,
-          boundariesElement: "scrollParent"
+          boundariesElement: this.boundary
         },
         offset: {
           enabled: true,
@@ -328,7 +345,7 @@ var script = {
   },
   watch: {
     adjustsBodyWidth: function adjustsBodyWidth() {
-      this.scheduleUpdate();
+      this.updatePopperInstance();
     },
     stateThatRequiresPopBodyToUpdate: {
       deep: true,
@@ -351,10 +368,10 @@ var script = {
       return;
     }
 
-    var popBody = document.createElement("DIV");
-    popBody.id = this.portalId;
-    this.popBody = popBody;
-    document.querySelector("body").appendChild(popBody);
+    var portalElement = document.createElement("DIV");
+    portalElement.id = this.portalId;
+    this.portalElement = portalElement;
+    document.querySelector("body").appendChild(portalElement);
     this.updatePopBodyElement();
   },
   beforeDestroy: function beforeDestroy() {
@@ -372,9 +389,9 @@ var script = {
       this.toggle();
     },
     updatePopBodyElement: function updatePopBodyElement() {
-      var popBody = this.popBody,
+      var portalElement = this.portalElement,
           bodyClasses = this.bodyClasses;
-      var classList = popBody.classList;
+      var classList = portalElement.classList;
       classList.forEach(function (existingClass) {
         if (bodyClasses.indexOf(existingClass) < 0) {
           classList.remove(existingClass);
@@ -385,9 +402,13 @@ var script = {
           classList.add(bodyClass);
         }
       });
-      popBody.style.display = this.visible_ ? "block" : "none";
-      popBody.style.zIndex = this.defaultBodyZIndex;
-      popBody.setAttribute("aria-hidden", String(!this.visible_));
+      portalElement.style.zIndex = this.defaultBodyZIndex;
+      portalElement.setAttribute("aria-hidden", String(!this.visible_)); // Only adjust the display if we have no theme set. When using a theme it is it's responsibility
+      // to adjust the visibility.
+
+      if (this.theme == null) {
+        portalElement.style.display = this.visible_ ? "block" : "none";
+      }
     },
     destroyPopperInstance: function destroyPopperInstance() {
       if (!this.popperInstance) {
@@ -399,18 +420,20 @@ var script = {
     },
     updatePopperInstance: function updatePopperInstance() {
       this.destroyPopperInstance();
+      var placement = this.placement,
+          modifiers = this.modifiers_,
+          popperReference = this.popperReference,
+          portalElement = this.portalElement;
 
-      if (this.popperReference == null) {
+      if (popperReference == null) {
         return;
       }
 
-      var reference = this.popperReference;
-      var body = this.elements().body;
       var options = {
-        modifiers: this.modifiers_,
-        placement: this.placement
+        modifiers: modifiers,
+        placement: placement
       };
-      this.popperInstance = new Popper(reference, body, options);
+      this.popperInstance = new Popper(popperReference, portalElement, options);
     },
     scheduleUpdate: function scheduleUpdate() {
       if (this.popperInstance) {
@@ -430,12 +453,6 @@ var script = {
     },
     toggle: function toggle() {
       this.setVisible(!this.visible_);
-    },
-    elements: function elements() {
-      var $refs = this.$refs;
-      return {
-        body: this.popBody
-      };
     }
   }
 };

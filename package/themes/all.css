@@ -1,3 +1,13 @@
+.kpop-theme-dark[aria-hidden='true'] {
+  opacity: 0;
+  transition: opacity 0.25s, visibility 0.25s;
+  visibility: hidden; }
+
+.kpop-theme-dark[aria-hidden='false'] {
+  opacity: 1;
+  transition: opacity 0.25s;
+  visibility: visible; }
+
 .kpop-theme-dark.kpop-body {
   background-color: #1d2935;
   border: 1px solid #1d2935;
@@ -72,6 +82,16 @@
       content: '';
       position: absolute; }
 
+.kpop-theme-clean[aria-hidden='true'] {
+  opacity: 0;
+  transition: opacity 0.25s, visibility 0.25s;
+  visibility: hidden; }
+
+.kpop-theme-clean[aria-hidden='false'] {
+  opacity: 1;
+  transition: opacity 0.25s;
+  visibility: visible; }
+
 .kpop-theme-clean.kpop-body {
   background-color: #fff;
   border: 1px solid #f1f3f8;
@@ -145,6 +165,16 @@
       content: '';
       position: absolute; }
 
+.kpop-theme-big-arrow[aria-hidden='true'] {
+  opacity: 0;
+  transition: opacity 0.25s, visibility 0.25s;
+  visibility: hidden; }
+
+.kpop-theme-big-arrow[aria-hidden='false'] {
+  opacity: 1;
+  transition: opacity 0.25s;
+  visibility: visible; }
+
 .kpop-theme-big-arrow.kpop-body {
   background-color: #fff;
   border: 1px solid #f1f3f8;
@@ -217,6 +247,16 @@
       border-style: solid;
       content: '';
       position: absolute; }
+
+.kpop-theme-v2[aria-hidden='true'] {
+  opacity: 0;
+  transition: opacity 0.25s, visibility 0.25s;
+  visibility: hidden; }
+
+.kpop-theme-v2[aria-hidden='false'] {
+  opacity: 1;
+  transition: opacity 0.25s;
+  visibility: visible; }
 
 .kpop-theme-v2.kpop-body {
   background-color: #fff;

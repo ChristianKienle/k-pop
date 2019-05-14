@@ -6,6 +6,35 @@ title: API
 
 ## Props
 
+### `portalId`
+
+|type|required|default|
+|------|------|-------|
+|String| no | `k-pop-portal-$shortId` |
+
+### `offset`
+
+|type|required|default|
+|------|------|-------|
+|Number| no | `0` |
+
+### `adjustsBodyWidth`
+
+|type|required|default|
+|------|------|-------|
+|Boolean| no | `false` |
+
+### `boundary`
+
+::: tip
+Valid Boundaries are `scrollParent`, `viewport` and `window`.
+:::
+
+|type|required|default|
+|------|------|-------|
+|String| no |`scrollParent`|
+
+
 ### `theme`
 
 |type|required|default|
@@ -16,19 +45,19 @@ title: API
 
 | type | required | default |
 |------|------|-------|
-| String | no | `"popper"` |
+| String | no | `""` |
+
+### `defaultBodyZIndex`
+
+| type | required | default |
+|------|------|-------|
+| Number | no | `Math.pow(2, 53) - 1` |
 
 ### `arrowClass`
 
 | type | required | default |
 |------|------|-------|
-| String | no | `"popper__arrow"` |
-
-### `transition`
-
-| type | required | default |
-|------|------|-------|
-| String | no | `"fade"` |
+| String | no | `""` |
 
 ### `withArrow`
 

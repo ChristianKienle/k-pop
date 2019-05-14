@@ -1,3 +1,13 @@
+.kpop-theme-big-arrow[aria-hidden='true'] {
+  opacity: 0;
+  transition: opacity 0.25s, visibility 0.25s;
+  visibility: hidden; }
+
+.kpop-theme-big-arrow[aria-hidden='false'] {
+  opacity: 1;
+  transition: opacity 0.25s;
+  visibility: visible; }
+
 .kpop-theme-big-arrow.kpop-body {
   background-color: #fff;
   border: 1px solid #f1f3f8;
