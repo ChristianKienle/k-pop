@@ -1,7 +1,7 @@
 
 /**
  * k-pop
- * version: 0.3.2,
+ * version: 0.4.0,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
@@ -151,17 +151,6 @@ var NoSsr = {
   }
 };
 
-var shortId = (function () {
-  var text = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (var i = 0; i < 5; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-
-  return text;
-});
-
 var boundaries = ["scrollParent", "viewport", "window"];
 var defaultBoundary = boundaries[0];
 var isValidBoundary = function isValidBoundary(value) {
@@ -185,7 +174,7 @@ var KPopTrigger = {
 var maxSafeInt = Math.pow(2, 53) - 1;
 var isBrowser = typeof window !== "undefined" && (typeof document === "undefined" ? "undefined" : _typeof(document)) !== undefined;
 var script = {
-  name: "KPop",
+  name: "k-pop",
   components: {
     KPopTrigger: KPopTrigger,
     NoSsr: NoSsr,
@@ -199,7 +188,7 @@ var script = {
   props: {
     portalId: {
       default: function _default() {
-        return "k-pop-portal-".concat(shortId());
+        return "k-pop-portal-container";
       },
       type: String
     },
@@ -274,12 +263,6 @@ var script = {
         toggle: this.toggle
       };
     },
-    stateThatRequiresPopBodyToUpdate: function stateThatRequiresPopBodyToUpdate() {
-      return {
-        visible: this.visible_,
-        bodyClasses: this.bodyClasses
-      };
-    },
     portalSelector: function portalSelector() {
       return "#".concat(this.portalId);
     },
@@ -300,6 +283,17 @@ var script = {
       var theme = this.theme,
           arrowClass = this.arrowClass;
       return _classes([arrowClass, theme ? "kpop-arrow" : null]);
+    },
+    portalStyles: function portalStyles() {
+      var result = {
+        zIndex: this.defaultBodyZIndex
+      };
+
+      if (this.theme == null) {
+        result.display = this.visible_ ? "block" : "none";
+      }
+
+      return result;
     },
     bodyClasses: function bodyClasses() {
       var theme = this.theme,
@@ -348,12 +342,6 @@ var script = {
     adjustsBodyWidth: function adjustsBodyWidth() {
       this.updatePopperInstance();
     },
-    stateThatRequiresPopBodyToUpdate: {
-      deep: true,
-      handler: function handler() {
-        this.updatePopBodyElement();
-      }
-    },
     stateThatRequiredPopperInstanceUpdate: {
       deep: true,
       handler: function handler() {
@@ -362,18 +350,13 @@ var script = {
     },
     visible: function visible(_visible) {
       this.visible_ = _visible;
-    }
-  },
-  beforeMount: function beforeMount() {
-    if (!isBrowser) {
-      return;
-    }
 
-    var portalElement = document.createElement("DIV");
-    portalElement.id = this.portalId;
-    this.portalElement = portalElement;
-    document.querySelector("body").appendChild(portalElement);
-    this.updatePopBodyElement();
+      if (_visible && this.popperInstance == null) {
+        this.updatePopperInstance();
+      }
+
+      this.scheduleUpdate();
+    }
   },
   beforeDestroy: function beforeDestroy() {
     this.destroyPopperInstance();
@@ -389,28 +372,6 @@ var script = {
 
       this.toggle();
     },
-    updatePopBodyElement: function updatePopBodyElement() {
-      var portalElement = this.portalElement,
-          bodyClasses = this.bodyClasses;
-      var classList = portalElement.classList;
-      classList.forEach(function (existingClass) {
-        if (bodyClasses.indexOf(existingClass) < 0) {
-          classList.remove(existingClass);
-        }
-      });
-      bodyClasses.forEach(function (bodyClass) {
-        if (!classList.contains(bodyClass)) {
-          classList.add(bodyClass);
-        }
-      });
-      portalElement.style.zIndex = this.defaultBodyZIndex;
-      portalElement.setAttribute("aria-hidden", String(!this.visible_)); // Only adjust the display if we have no theme set. When using a theme it is it's responsibility
-      // to adjust the visibility.
-
-      if (this.theme == null) {
-        portalElement.style.display = this.visible_ ? "block" : "none";
-      }
-    },
     destroyPopperInstance: function destroyPopperInstance() {
       if (!this.popperInstance) {
         return;
@@ -423,10 +384,15 @@ var script = {
       this.destroyPopperInstance();
       var placement = this.placement,
           modifiers = this.modifiers_,
-          popperReference = this.popperReference,
-          portalElement = this.portalElement;
+          popperReference = this.popperReference;
 
       if (popperReference == null) {
+        return;
+      }
+
+      var body = this.$refs.body;
+
+      if (body == null) {
         return;
       }
 
@@ -434,7 +400,7 @@ var script = {
         modifiers: modifiers,
         placement: placement
       };
-      this.popperInstance = new Popper(popperReference, portalElement, options);
+      this.popperInstance = new Popper(popperReference, body, options);
     },
     scheduleUpdate: function scheduleUpdate() {
       if (this.popperInstance) {
@@ -442,9 +408,18 @@ var script = {
       }
     },
     setVisible: function setVisible(newVisible) {
+      var _this = this;
+
       this.visible_ = newVisible;
       this.$emit("update:visible", this.visible_);
-      this.scheduleUpdate();
+
+      if (this.visible_ && this.popperInstance == null) {
+        this.updatePopperInstance();
+      }
+
+      this.$nextTick(function () {
+        _this.scheduleUpdate();
+      });
     },
     show: function show() {
       this.setVisible(true);
@@ -469,7 +444,7 @@ var __vue_render__ = function __vue_render__() {
 
   var _c = _vm._self._c || _h;
 
-  return _c('div', [_c('KPopTrigger', {
+  return _c('div', [_c('k-pop-trigger', {
     ref: "trigger",
     nativeOn: {
       "click": function click($event) {
@@ -480,12 +455,19 @@ var __vue_render__ = function __vue_render__() {
     attrs: {
       "selector": _vm.portalSelector
     }
+  }, [_c('div', {
+    ref: "body",
+    class: _vm.bodyClasses,
+    style: _vm.portalStyles,
+    attrs: {
+      "aria-hidden": String(!_vm.visible_)
+    }
   }, [_vm._t("default", null, null, _vm.slotProps), _vm._v(" "), _c('vp-arrow', {
     class: _vm.arrowClasses,
     attrs: {
       "x-arrow": ""
     }
-  })], 2)], 1)], 1);
+  })], 2)])], 1)], 1);
 };
 
 var __vue_staticRenderFns__ = [];
@@ -505,17 +487,17 @@ var __vue_is_functional_template__ = false;
 
 /* style inject SSR */
 
-var Pop = __vue_normalize__({
+var KPop = __vue_normalize__({
   render: __vue_render__,
   staticRenderFns: __vue_staticRenderFns__
 }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, undefined, undefined);
 
-Pop.install = function (_vue) {
-  _vue.component("KPop", Pop);
+KPop.install = function (_vue) {
+  _vue.component("k-pop", KPop);
 };
 
 if (typeof window !== "undefined" && window.Vue && window.Vue === Vue) {
-  Vue.use(Pop);
+  Vue.use(KPop);
 }
 
-export default Pop;
+export default KPop;

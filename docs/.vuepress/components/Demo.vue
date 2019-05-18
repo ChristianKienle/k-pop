@@ -16,7 +16,7 @@ import "./../../../themes/clean.scss"
 export default {
   name: "Demo",
   components: {
-    KPop: () => ({ component: import("./../../../src/Pop/Pop.vue") })
+    KPop: () => ({ component: import("./../../../src/Pop/k-pop.vue") })
   },
 }
 </script>

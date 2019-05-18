@@ -1,7 +1,7 @@
-import Pop from "./Pop.vue"
+import KPop from "./k-pop.vue"
 
-Pop.install = _vue => {
-  _vue.component("KPop", Pop)
+KPop.install = _vue => {
+  _vue.component("k-pop", KPop)
 }
 
-export default Pop
+export default KPop
