@@ -1,7 +1,7 @@
 {
   "name": "@ckienle/k-pop",
   "description": "A simple Popover component for Vue",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "author": {
     "name": "Christian Kienle",
     "url": "https://www.github.com/christiankienle"

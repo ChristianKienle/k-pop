@@ -1,7 +1,7 @@
 
 /**
  * k-pop
- * version: 0.4.0,
+ * version: 0.4.1,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
@@ -2997,6 +2997,10 @@
         type: Boolean,
         default: false
       },
+      adjustsVisibility: {
+        type: Boolean,
+        default: true
+      },
       boundary: {
         type: String,
         default: defaultBoundary,
@@ -3048,7 +3052,8 @@
     },
     data: function data() {
       return {
-        visible_: this.visible
+        visible_: this.visible,
+        outOfBoundaries_: false
       };
     },
     computed: {
@@ -3081,13 +3086,13 @@
             arrowClass = this.arrowClass;
         return _classes([arrowClass, theme ? "kpop-arrow" : null]);
       },
-      portalStyles: function portalStyles() {
+      bodyStyles: function bodyStyles() {
         var result = {
           zIndex: this.defaultBodyZIndex
         };
 
-        if (this.theme == null) {
-          result.display = this.visible_ ? "block" : "none";
+        if (this.theme == null && this.adjustsVisibility) {
+          result.display = this.visible_ && this.outOfBoundaries_ === false ? "block" : "none";
         }
 
         return result;
@@ -3102,6 +3107,11 @@
       // We merge the user defined modifiers with the modifiers required by FdPopper
       modifiers_: function modifiers_() {
         return _objectSpread({
+          updateState: {
+            enabled: true,
+            order: 9999999,
+            fn: this.handleNewPopperState
+          },
           adjustsBodyWidth: {
             enabled: this.adjustsBodyWidth,
             order: 0,
@@ -3162,6 +3172,12 @@
       this.$forceUpdate();
     },
     methods: {
+      handleNewPopperState: function handleNewPopperState(data) {
+        var rawOutOfBoundaries = data.attributes["x-out-of-boundaries"];
+        var isOutOfBoundaries = rawOutOfBoundaries === true || rawOutOfBoundaries === "" || rawOutOfBoundaries === "true";
+        this.outOfBoundaries_ = isOutOfBoundaries;
+        return data;
+      },
       handleClickOnTrigger: function handleClickOnTrigger() {
         if (this.hasCustomTriggerLogic) {
           return;
@@ -3340,7 +3356,7 @@
     }, [_c('div', {
       ref: "body",
       class: _vm.bodyClasses,
-      style: _vm.portalStyles,
+      style: _vm.bodyStyles,
       attrs: {
         "aria-hidden": String(!_vm.visible_)
       }

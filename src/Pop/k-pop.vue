@@ -11,12 +11,12 @@
     </k-pop-trigger>
     <no-ssr>
       <portal :selector="portalSelector">
-        <div ref="body" :class="bodyClasses" :style="portalStyles" :aria-hidden="String(!visible_)">
-        <slot v-bind="slotProps" />
-        <vp-arrow
-          x-arrow
-          :class="arrowClasses"
-        />
+        <div ref="body" :class="bodyClasses" :style="bodyStyles" :aria-hidden="String(!visible_)">
+          <slot v-bind="slotProps" />
+          <vp-arrow
+            x-arrow
+            :class="arrowClasses"
+          />
         </div>
       </portal>
     </no-ssr>
@@ -59,6 +59,7 @@ export default {
     portalId: { default: () => `k-pop-portal-container`, type: String },
     offset: { type: Number, default: 0 },
     adjustsBodyWidth: { type: Boolean, default: false },
+    adjustsVisibility: { type: Boolean, default: true },
     boundary: {
       type: String,
       default: defaultBoundary,
@@ -84,7 +85,8 @@ export default {
   },
   data() {
     return {
-      visible_: this.visible
+      visible_: this.visible,
+      outOfBoundaries_: false
     }
   },
   computed: {
@@ -116,13 +118,13 @@ export default {
       const { theme, arrowClass } = this
       return normalizedClasses([arrowClass, theme ? "kpop-arrow" : null])
     },
-    portalStyles() {
+    bodyStyles() {
       const result = {
         zIndex: this.defaultBodyZIndex
       }
 
-      if(this.theme == null) {
-        result.display = this.visible_ ? "block" : "none"
+      if(this.theme == null && this.adjustsVisibility) {
+        result.display = (this.visible_ && this.outOfBoundaries_ === false) ? "block" : "none"
       }
       return result
     },
@@ -139,6 +141,11 @@ export default {
     // We merge the user defined modifiers with the modifiers required by FdPopper
     modifiers_() {
       return {
+        updateState: {
+          enabled: true,
+          order: 9999999,
+          fn: this.handleNewPopperState
+        },
         adjustsBodyWidth: {
           enabled: this.adjustsBodyWidth,
           order: 0,
@@ -195,6 +202,12 @@ export default {
     this.$forceUpdate()
   },
   methods: {
+    handleNewPopperState(data) {
+      const rawOutOfBoundaries = data.attributes["x-out-of-boundaries"];
+      const isOutOfBoundaries = rawOutOfBoundaries === true || rawOutOfBoundaries === "" || rawOutOfBoundaries === "true";
+      this.outOfBoundaries_ = isOutOfBoundaries;
+      return data
+    },
     handleClickOnTrigger() {
       if(this.hasCustomTriggerLogic) {
         return
