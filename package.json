@@ -1,13 +1,13 @@
 {
-  "name": "k-pop",
-  "version": "0.4.1",
+  "name": "@ckienle/k-pop",
+  "version": "0.4.3",
   "private": true,
   "scripts": {
     "build:and:release": "npm run build && cd package && npm publish",
     "serve:demo": "vue-cli-service serve components/demo/index.js",
     "docs:dev": "vuepress dev docs --no-cache",
     "docs:build": "vuepress build docs",
-    "build:bili": "bili --format umd --format umd-min --format es --module-name KPop --env.NODE_ENV production -d package/dist",
+    "build:bili": "bili --file-name kpop.[format].js --format cjs --format umd-min --format es --module-name KPop --env.NODE_ENV production -d package/dist",
     "build": "rimraf -r package/dist && rimraf -r package/src && rimraf package/themes && npm run build:themes && npm run build:bili && cp -R ./src package/src && cp ./LICENSE package/LICENSE",
     "build:src": "bili src/index.js --out-dir package/src",
     "build:themes": "rimraf package/themes && node-sass --recursive --output package/themes --source-map true --source-map-contents ./themes",
@@ -38,7 +38,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
-    "bili": "^4.7.3",
+    "bili": "^4.8.0",
     "core-js": "^2.6.5",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
@@ -54,9 +54,7 @@
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
     "vue-template-compiler": "^2.6.10",
-    "vuepress": "^1.0.0-alpha.44"
-  },
-  "dependencies": {
+    "vuepress": "^1.0.0-alpha.44",
     "vuepress-plugin-container": "^2.0.1"
   }
 }

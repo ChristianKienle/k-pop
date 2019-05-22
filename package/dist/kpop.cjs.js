@@ -1,14 +1,18 @@
 
 /**
  * k-pop
- * version: 0.4.1,
+ * version: 0.4.3,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
 */
-import { Portal } from '@linusborg/vue-simple-portal';
-import Popper from 'popper.js';
-import __vue_normalize__ from 'vue-runtime-helpers/dist/normalize-component.js';
+'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var vueSimplePortal = require('@linusborg/vue-simple-portal');
+var Popper = _interopDefault(require('popper.js'));
+var __vue_normalize__ = _interopDefault(require('vue-runtime-helpers/dist/normalize-component.js'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -178,7 +182,7 @@ var script = {
   components: {
     KPopTrigger: KPopTrigger,
     NoSsr: NoSsr,
-    Portal: Portal,
+    Portal: vueSimplePortal.Portal,
     VpArrow: {
       render: function render(h) {
         return h("span");
@@ -516,4 +520,4 @@ if (typeof window !== "undefined" && window.Vue && window.Vue === Vue) {
   Vue.use(KPop);
 }
 
-export default KPop;
+module.exports = KPop;

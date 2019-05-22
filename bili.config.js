@@ -12,7 +12,9 @@ module.exports = {
 
   plugins: {
     vue: true,
+    commonjs: true
   },
+  externals: ["vue", "popper.js", "@linusborg/vue-simple-portal"],
   globals: {
     vue: "Vue",
   },

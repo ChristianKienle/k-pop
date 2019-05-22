@@ -1,7 +1,7 @@
 {
   "name": "@ckienle/k-pop",
   "description": "A simple Popover component for Vue",
-  "version": "0.4.1",
+  "version": "0.4.3",
   "author": {
     "name": "Christian Kienle",
     "url": "https://www.github.com/christiankienle"
@@ -11,10 +11,10 @@
     "url": "https://github.com/christiankienle/k-pop"
   },
   "private": false,
-  "main": "./dist/index.umd.js",
-  "module": "./dist/index.mjs",
-  "unpkg": "./dist/index.umd.min.js",
-  "jsDelivr": "./dist/index.umd.min.js",
+  "main": "dist/kpop.cjs.js",
+  "module": "dist/kpop.esm.js",
+  "unpkg": "dist/kpop.umd.js",
+  "jsdelivr": "dist/kpop.umd.js",
   "files": [
     "dist",
     "src",
