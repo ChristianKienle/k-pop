@@ -1,12 +1,13 @@
 
 /**
  * k-pop
- * version: 0.4.3,
+ * version: 0.5.0,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
 */
-import { Portal } from '@linusborg/vue-simple-portal';
+import Vue$1 from 'vue';
+import id from 'nanoid/non-secure';
 import Popper from 'popper.js';
 import __vue_normalize__ from 'vue-runtime-helpers/dist/normalize-component.js';
 
@@ -151,6 +152,168 @@ var NoSsr = {
   }
 };
 
+function _typeof$1(obj) {
+  if (typeof Symbol === "function" && _typeof(Symbol.iterator) === "symbol") {
+    _typeof$1 = function _typeof$1(obj) {
+      return _typeof(obj);
+    };
+  } else {
+    _typeof$1 = function _typeof$1(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof(obj);
+    };
+  }
+
+  return _typeof$1(obj);
+}
+
+var config = {
+  selector: "vue-portal-target-".concat(id())
+};
+
+var setSelector = function setSelector(selector) {
+  return config.selector = selector;
+};
+
+var isBrowser = typeof window !== 'undefined' && (typeof document === "undefined" ? "undefined" : _typeof$1(document)) !== undefined;
+var TargetContainer = Vue$1.extend({
+  // as an abstract component, it doesn't appear in
+  // the $parent chain of components.
+  // which means the next parent of any component rendered inside of this oen
+  // will be the parent from which is was portal'd
+  abstract: true,
+  name: 'PortalOutlet',
+  props: ['nodes', 'tag'],
+  data: function data(vm) {
+    return {
+      updatedNodes: vm.nodes
+    };
+  },
+  render: function render(h) {
+    var nodes = this.updatedNodes && this.updatedNodes();
+    if (!nodes) return h();
+    return nodes.length < 2 && !nodes[0].text ? nodes : h(this.tag || 'DIV', nodes);
+  },
+  destroyed: function destroyed() {
+    var el = this.$el;
+    el.parentNode.removeChild(el);
+  }
+});
+var Portal = Vue$1.extend({
+  name: 'VueSimplePortal',
+  props: {
+    disabled: {
+      type: Boolean
+    },
+    prepend: {
+      type: Boolean
+    },
+    selector: {
+      type: String,
+      default: function _default() {
+        return "#".concat(config.selector);
+      }
+    },
+    tag: {
+      type: String,
+      default: 'DIV'
+    }
+  },
+  render: function render(h) {
+    if (this.disabled) {
+      var nodes = this.$scopedSlots && this.$scopedSlots.default();
+      if (!nodes) return h();
+      return nodes.length < 2 && !nodes[0].text ? nodes : h(this.tag, nodes);
+    }
+
+    return h();
+  },
+  created: function created() {
+    if (!this.getTargetEl()) {
+      this.insertTargetEl();
+    }
+  },
+  updated: function updated() {
+    var _this = this; // We only update the target container component
+    // if the scoped slot function is a fresh one
+    // The new slot syntax (since Vue 2.6) can cache unchanged slot functions
+    // and we want to respect that here.
+
+
+    this.$nextTick(function () {
+      if (!_this.disabled && _this.slotFn !== _this.$scopedSlots.default) {
+        _this.container.updatedNodes = _this.$scopedSlots.default;
+      }
+
+      _this.slotFn = _this.$scopedSlots.default;
+    });
+  },
+  beforeDestroy: function beforeDestroy() {
+    this.unmount();
+  },
+  watch: {
+    disabled: {
+      immediate: true,
+      handler: function handler(disabled) {
+        disabled ? this.unmount() : this.$nextTick(this.mount);
+      }
+    }
+  },
+  methods: {
+    // This returns the element into which the content should be mounted.
+    getTargetEl: function getTargetEl() {
+      if (!isBrowser) return;
+      return document.querySelector(this.selector);
+    },
+    insertTargetEl: function insertTargetEl() {
+      if (!isBrowser) return;
+      var parent = document.querySelector('body');
+      var child = document.createElement(this.tag);
+      child.id = this.selector.substring(1);
+      parent.appendChild(child);
+    },
+    mount: function mount() {
+      var targetEl = this.getTargetEl();
+      var el = document.createElement('DIV');
+
+      if (this.prepend && targetEl.firstChild) {
+        targetEl.insertBefore(el, targetEl.firstChild);
+      } else {
+        targetEl.appendChild(el);
+      }
+
+      this.container = new TargetContainer({
+        el: el,
+        parent: this,
+        propsData: {
+          tag: this.tag,
+          nodes: this.$scopedSlots.default
+        }
+      });
+    },
+    unmount: function unmount() {
+      if (this.container) {
+        this.container.$destroy();
+        delete this.container;
+      }
+    }
+  }
+});
+
+function install(_Vue) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  _Vue.component(options.name || 'portal', Portal);
+
+  if (options.defaultSelector) {
+    setSelector(options.defaultSelector);
+  }
+}
+
+if (typeof window !== 'undefined' && window.Vue && window.Vue === Vue$1) {
+  // plugin was inlcuded directly in a browser
+  Vue$1.use(install);
+}
+
 var boundaries = ["scrollParent", "viewport", "window"];
 var defaultBoundary = boundaries[0];
 var isValidBoundary = function isValidBoundary(value) {
@@ -172,7 +335,7 @@ var KPopTrigger = {
 // it's value here.
 
 var maxSafeInt = Math.pow(2, 53) - 1;
-var isBrowser = typeof window !== "undefined" && (typeof document === "undefined" ? "undefined" : _typeof(document)) !== undefined;
+var isBrowser$1 = typeof window !== "undefined" && (typeof document === "undefined" ? "undefined" : _typeof(document)) !== undefined;
 var script = {
   name: "k-pop",
   components: {
@@ -322,7 +485,9 @@ var script = {
             var instance = data.instance,
                 offsets = data.offsets; // we cant use style.width because it may be something like 100%
 
-            var referenceWidth = instance.reference.clientWidth;
+            var referenceWidth = instance.reference.clientWidth; // data.offsets.popper.width = data.styles.width =
+            // Math.max(data.offsets.reference.width, data.offsets.popper.width);
+
             var delta = referenceWidth - offsets.popper.width;
             instance.popper.style.width = referenceWidth + "px";
             offsets.popper.width = referenceWidth;

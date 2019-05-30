@@ -25,7 +25,8 @@
 
 <script>
 import { shortId, NoSsr, normalizedClasses } from "./helper"
-import { Portal } from "@linusborg/vue-simple-portal"
+import { Portal } from "./../vendor/vue-simple-portal.umd.min"
+// import { Portal } from "@linusborg/vue-simple-portal"
 import Popper from "popper.js"
 
 const KPopTrigger = {
@@ -153,6 +154,8 @@ export default {
             const { instance, offsets } = data
             // we cant use style.width because it may be something like 100%
             const referenceWidth = instance.reference.clientWidth
+            // data.offsets.popper.width = data.styles.width =
+        // Math.max(data.offsets.reference.width, data.offsets.popper.width);
             const delta = referenceWidth - offsets.popper.width
             instance.popper.style.width = referenceWidth + "px"
             offsets.popper.width = referenceWidth
