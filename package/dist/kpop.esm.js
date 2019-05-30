@@ -1,13 +1,12 @@
 
 /**
  * k-pop
- * version: 0.5.0,
+ * version: 0.6.0,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
 */
-import Vue$1 from 'vue';
-import id from 'nanoid/non-secure';
+import { Portal } from '@linusborg/vue-simple-portal';
 import Popper from 'popper.js';
 import __vue_normalize__ from 'vue-runtime-helpers/dist/normalize-component.js';
 
@@ -152,173 +151,21 @@ var NoSsr = {
   }
 };
 
-function _typeof$1(obj) {
-  if (typeof Symbol === "function" && _typeof(Symbol.iterator) === "symbol") {
-    _typeof$1 = function _typeof$1(obj) {
-      return _typeof(obj);
-    };
-  } else {
-    _typeof$1 = function _typeof$1(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof(obj);
-    };
-  }
-
-  return _typeof$1(obj);
-}
-
-var config = {
-  selector: "vue-portal-target-".concat(id())
-};
-
-var setSelector = function setSelector(selector) {
-  return config.selector = selector;
-};
-
-var isBrowser = typeof window !== 'undefined' && (typeof document === "undefined" ? "undefined" : _typeof$1(document)) !== undefined;
-var TargetContainer = Vue$1.extend({
-  // as an abstract component, it doesn't appear in
-  // the $parent chain of components.
-  // which means the next parent of any component rendered inside of this oen
-  // will be the parent from which is was portal'd
-  abstract: true,
-  name: 'PortalOutlet',
-  props: ['nodes', 'tag'],
-  data: function data(vm) {
-    return {
-      updatedNodes: vm.nodes
-    };
-  },
-  render: function render(h) {
-    var nodes = this.updatedNodes && this.updatedNodes();
-    if (!nodes) return h();
-    return nodes.length < 2 && !nodes[0].text ? nodes : h(this.tag || 'DIV', nodes);
-  },
-  destroyed: function destroyed() {
-    var el = this.$el;
-    el.parentNode.removeChild(el);
-  }
-});
-var Portal = Vue$1.extend({
-  name: 'VueSimplePortal',
-  props: {
-    disabled: {
-      type: Boolean
-    },
-    prepend: {
-      type: Boolean
-    },
-    selector: {
-      type: String,
-      default: function _default() {
-        return "#".concat(config.selector);
-      }
-    },
-    tag: {
-      type: String,
-      default: 'DIV'
-    }
-  },
-  render: function render(h) {
-    if (this.disabled) {
-      var nodes = this.$scopedSlots && this.$scopedSlots.default();
-      if (!nodes) return h();
-      return nodes.length < 2 && !nodes[0].text ? nodes : h(this.tag, nodes);
-    }
-
-    return h();
-  },
-  created: function created() {
-    if (!this.getTargetEl()) {
-      this.insertTargetEl();
-    }
-  },
-  updated: function updated() {
-    var _this = this; // We only update the target container component
-    // if the scoped slot function is a fresh one
-    // The new slot syntax (since Vue 2.6) can cache unchanged slot functions
-    // and we want to respect that here.
-
-
-    this.$nextTick(function () {
-      if (!_this.disabled && _this.slotFn !== _this.$scopedSlots.default) {
-        _this.container.updatedNodes = _this.$scopedSlots.default;
-      }
-
-      _this.slotFn = _this.$scopedSlots.default;
-    });
-  },
-  beforeDestroy: function beforeDestroy() {
-    this.unmount();
-  },
-  watch: {
-    disabled: {
-      immediate: true,
-      handler: function handler(disabled) {
-        disabled ? this.unmount() : this.$nextTick(this.mount);
-      }
-    }
-  },
-  methods: {
-    // This returns the element into which the content should be mounted.
-    getTargetEl: function getTargetEl() {
-      if (!isBrowser) return;
-      return document.querySelector(this.selector);
-    },
-    insertTargetEl: function insertTargetEl() {
-      if (!isBrowser) return;
-      var parent = document.querySelector('body');
-      var child = document.createElement(this.tag);
-      child.id = this.selector.substring(1);
-      parent.appendChild(child);
-    },
-    mount: function mount() {
-      var targetEl = this.getTargetEl();
-      var el = document.createElement('DIV');
-
-      if (this.prepend && targetEl.firstChild) {
-        targetEl.insertBefore(el, targetEl.firstChild);
-      } else {
-        targetEl.appendChild(el);
-      }
-
-      this.container = new TargetContainer({
-        el: el,
-        parent: this,
-        propsData: {
-          tag: this.tag,
-          nodes: this.$scopedSlots.default
-        }
-      });
-    },
-    unmount: function unmount() {
-      if (this.container) {
-        this.container.$destroy();
-        delete this.container;
-      }
-    }
-  }
-});
-
-function install(_Vue) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-  _Vue.component(options.name || 'portal', Portal);
-
-  if (options.defaultSelector) {
-    setSelector(options.defaultSelector);
-  }
-}
-
-if (typeof window !== 'undefined' && window.Vue && window.Vue === Vue$1) {
-  // plugin was inlcuded directly in a browser
-  Vue$1.use(install);
-}
-
 var boundaries = ["scrollParent", "viewport", "window"];
 var defaultBoundary = boundaries[0];
 var isValidBoundary = function isValidBoundary(value) {
   return boundaries.indexOf(value) >= 0;
 };
+
+var AUTO = "auto";
+var EQUALS_TRIGGER = "equal-trigger";
+var AT_LEAST_TRIGGER = "at-least-trigger";
+var all = [AUTO, // default
+EQUALS_TRIGGER, AT_LEAST_TRIGGER];
+var isValid = function isValid(value) {
+  return all.indexOf(value) >= 0;
+};
+var defaultMode = AUTO;
 
 var KPopTrigger = {
   mounted: function mounted() {
@@ -335,7 +182,8 @@ var KPopTrigger = {
 // it's value here.
 
 var maxSafeInt = Math.pow(2, 53) - 1;
-var isBrowser$1 = typeof window !== "undefined" && (typeof document === "undefined" ? "undefined" : _typeof(document)) !== undefined;
+var isBrowser = typeof window !== "undefined" && (typeof document === "undefined" ? "undefined" : _typeof(document)) !== undefined;
+
 var script = {
   name: "k-pop",
   components: {
@@ -371,6 +219,11 @@ var script = {
       type: String,
       default: defaultBoundary,
       validator: isValidBoundary
+    },
+    bodySizeMode: {
+      type: String,
+      default: defaultMode,
+      validator: isValid
     },
     theme: {
       type: String,
@@ -423,6 +276,14 @@ var script = {
     };
   },
   computed: {
+    bodySizeMode_: function bodySizeMode_() {
+      // Handle deprecated first for compatibility
+      if (this.adjustsBodyWidth) {
+        return EQUALS_TRIGGER;
+      }
+
+      return this.bodySizeMode;
+    },
     slotProps: function slotProps() {
       return {
         visible: this.visible_,
@@ -476,24 +337,12 @@ var script = {
         updateState: {
           enabled: true,
           order: 9999999,
-          fn: this.handleNewPopperState
+          fn: this.modifier_updateState
         },
-        adjustsBodyWidth: {
-          enabled: this.adjustsBodyWidth,
+        bodySizeMode: {
+          enabled: true,
           order: 0,
-          fn: function fn(data) {
-            var instance = data.instance,
-                offsets = data.offsets; // we cant use style.width because it may be something like 100%
-
-            var referenceWidth = instance.reference.clientWidth; // data.offsets.popper.width = data.styles.width =
-            // Math.max(data.offsets.reference.width, data.offsets.popper.width);
-
-            var delta = referenceWidth - offsets.popper.width;
-            instance.popper.style.width = referenceWidth + "px";
-            offsets.popper.width = referenceWidth;
-            offsets.popper.left = offsets.popper.left - 0.5 * delta;
-            return data;
-          }
+          fn: this.modifier_bodySizeMode
         },
         flip: {
           enabled: this.flips
@@ -540,7 +389,35 @@ var script = {
     this.$forceUpdate();
   },
   methods: {
-    handleNewPopperState: function handleNewPopperState(data) {
+    modifier_bodySizeMode: function modifier_bodySizeMode(data) {
+      var mode = this.bodySizeMode_;
+
+      if (mode === AUTO) {
+        return data;
+      }
+
+      var instance = data.instance,
+          offsets = data.offsets;
+      var reference = instance.reference,
+          popper = instance.popper;
+      var referenceWidth = instance.reference.clientWidth;
+
+      if (mode === AT_LEAST_TRIGGER) {
+        popper.style.minWidth = referenceWidth + "px";
+        return data;
+      }
+
+      if (mode === EQUALS_TRIGGER) {
+        var delta = referenceWidth - offsets.popper.width;
+        popper.style.width = referenceWidth + "px";
+        offsets.popper.width = referenceWidth;
+        offsets.popper.left = offsets.popper.left - 0.5 * delta;
+        return data;
+      }
+
+      return data;
+    },
+    modifier_updateState: function modifier_updateState(data) {
       var rawOutOfBoundaries = data.attributes["x-out-of-boundaries"];
       var isOutOfBoundaries = rawOutOfBoundaries === true || rawOutOfBoundaries === "" || rawOutOfBoundaries === "true";
       this.outOfBoundaries_ = isOutOfBoundaries;
@@ -589,18 +466,20 @@ var script = {
       }
     },
     setVisible: function setVisible(newVisible) {
-      var _this = this;
-
       this.visible_ = newVisible;
       this.$emit("update:visible", this.visible_);
 
       if (this.visible_ && this.popperInstance == null) {
         this.updatePopperInstance();
-      }
+      } // newVisible ? this.popperInstance.show() : this.popperInstance.hide();
 
-      this.$nextTick(function () {
-        _this.scheduleUpdate();
-      });
+
+      var that = this;
+      setTimeout(function () {
+        return that.scheduleUpdate();
+      }, 50); // this.$nextTick(() => {
+      //   this.scheduleUpdate();
+      // })
     },
     show: function show() {
       this.setVisible(true);

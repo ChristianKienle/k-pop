@@ -1,9 +1,12 @@
 const Path = require("path");
 const sharedComponentsBase = Path.resolve(process.cwd(), "components");
+const pkg = require(Path.resolve(process.cwd(), "package.json"))
 
 module.exports = {
   extendPageData($page) {
     $page.lib = "k-pop"
+    $page.libVersion = pkg.version
+
   },
   configureWebpack: {
     resolve: {
@@ -13,13 +16,17 @@ module.exports = {
       }
     },
   },
-  title: "k-pop",
+  title: `k-pop`,
   base: "/k-pop/",
   plugins: [
     ["container", {
       type: "example",
       before: info => `<div class="example__rendered"><demo-${info} /></div>`,
       after: ''
+    }],
+    ["container", {
+      type: "tip",
+      defaultTitle: ''
     }],
     [
       "@vuepress/register-components", {

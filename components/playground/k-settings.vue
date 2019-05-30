@@ -25,6 +25,11 @@
         <option v-for="aTheme in themes" :value="aTheme" :key="aTheme">{{aTheme}}</option>
       </select>
     </SettingRow>
+    <SettingRow label="Body Size Mode">
+      <select v-model="bodySizeMode">
+        <option v-for="aBodySizeMode in bodySizeModes" :value="aBodySizeMode" :key="aBodySizeMode">{{aBodySizeMode}}</option>
+      </select>
+    </SettingRow>
     <SettingRow label="Offset">
       <div style="display: flex;">
         <input type="range" v-model.number="offset" min="0" max="100" value="0">
@@ -48,10 +53,6 @@
       </label>
       <br />
       <label>
-        <input type="checkbox" v-model="adjustsBodyWidth">Adjust Body Width
-      </label>
-      <br />
-      <label>
         <input type="checkbox" v-model="useNativeButton" @change="$emit('update:useNativeButton', $event.target.checked)">Native Button
       </label>
     </SettingRow>
@@ -60,6 +61,7 @@
 
 <script>
 import SettingRow from "./settings/k-row.vue"
+import * as BodySizeMode from "./../../src/Pop/body-size-mode"
 
 export default {
   components: { SettingRow },
@@ -71,8 +73,8 @@ export default {
   computed: {
     kPopProps() {
       return {
+        bodySizeMode: this.bodySizeMode,
         boundary: this.boundary,
-        adjustsBodyWidth: this.adjustsBodyWidth,
         offset: this.offset,
         flips: this.flips,
         placement: this.placement,
@@ -83,7 +85,8 @@ export default {
   },
   data() {
     return {
-      adjustsBodyWidth: false,
+      bodySizeMode: BodySizeMode.defaultMode,
+      bodySizeModes: [...BodySizeMode.all],
       triggerWidth: 250,
       useNativeButton: false,
       offset: 0,

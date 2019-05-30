@@ -3,7 +3,7 @@ import PopperJS from "popper.js"
 import VueSimplePortal from "@linusborg/vue-simple-portal";
 
 export default ({
-  Vue, // the version of Vue being used in the VuePress app
+  Vue,
   options, // the options for the root Vue instance
   router, // the router instance for the app
   siteData // site metadata

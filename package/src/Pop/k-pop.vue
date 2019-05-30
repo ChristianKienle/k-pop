@@ -11,7 +11,10 @@
     </k-pop-trigger>
     <no-ssr>
       <portal :selector="portalSelector">
-        <div ref="body" :class="bodyClasses" :style="bodyStyles" :aria-hidden="String(!visible_)">
+        <div ref="body"
+        :aria-hidden="String(!visible_)"
+        :class="bodyClasses" :style="bodyStyles"
+        >
           <slot v-bind="slotProps" />
           <vp-arrow
             x-arrow
@@ -25,8 +28,7 @@
 
 <script>
 import { shortId, NoSsr, normalizedClasses } from "./helper"
-import { Portal } from "./../vendor/vue-simple-portal.umd.min"
-// import { Portal } from "@linusborg/vue-simple-portal"
+import { Portal } from "@linusborg/vue-simple-portal"
 import Popper from "popper.js"
 
 const KPopTrigger = {
@@ -47,6 +49,19 @@ const KPopTrigger = {
 const maxSafeInt = Math.pow(2, 53) - 1
 const isBrowser = typeof window !== "undefined" && typeof document !== undefined
 import { isValidBoundary, defaultBoundary } from "./boundary"
+import * as BodySizeMode from "./body-size-mode"
+
+// const SIZE_MODE_AUTO = "auto"
+// const SIZE_MODE_EQUALS_TRIGGER = "equal-trigger"
+// const SIZE_MODE_AT_LEAST_TRIGGER = "at-least-trigger"
+
+// const SizeModes = [
+//   SIZE_MODE_AUTO, // default
+//   SIZE_MODE_EQUALS_TRIGGER,
+//   SIZE_MODE_AT_LEAST_TRIGGER,
+// ]
+
+const isSizeMode = value => SizeModes.indexOf(value) >= 0
 
 export default {
   name: "k-pop",
@@ -66,6 +81,7 @@ export default {
       default: defaultBoundary,
       validator: isValidBoundary
     },
+    bodySizeMode: { type: String, default: BodySizeMode.defaultMode, validator: BodySizeMode.isValid },
     theme: { type: String, default: null },
     bodyClass: { type: String, default: "" },
     defaultBodyZIndex: { type: [Number, String], default: maxSafeInt },
@@ -91,6 +107,13 @@ export default {
     }
   },
   computed: {
+    bodySizeMode_() {
+      // Handle deprecated first for compatibility
+      if(this.adjustsBodyWidth) {
+        return BodySizeMode.EQUALS_TRIGGER
+      }
+      return this.bodySizeMode
+    },
     slotProps() {
       return {
         visible: this.visible_,
@@ -145,23 +168,12 @@ export default {
         updateState: {
           enabled: true,
           order: 9999999,
-          fn: this.handleNewPopperState
+          fn: this.modifier_updateState
         },
-        adjustsBodyWidth: {
-          enabled: this.adjustsBodyWidth,
+        bodySizeMode: {
+          enabled: true,
           order: 0,
-          fn(data) {
-            const { instance, offsets } = data
-            // we cant use style.width because it may be something like 100%
-            const referenceWidth = instance.reference.clientWidth
-            // data.offsets.popper.width = data.styles.width =
-        // Math.max(data.offsets.reference.width, data.offsets.popper.width);
-            const delta = referenceWidth - offsets.popper.width
-            instance.popper.style.width = referenceWidth + "px"
-            offsets.popper.width = referenceWidth
-            offsets.popper.left = offsets.popper.left - (0.5 * delta)
-            return data
-          }
+          fn: this.modifier_bodySizeMode
         },
         flip: {
           enabled: this.flips
@@ -205,7 +217,29 @@ export default {
     this.$forceUpdate()
   },
   methods: {
-    handleNewPopperState(data) {
+    modifier_bodySizeMode(data) {
+      const mode = this.bodySizeMode_;
+      if(mode === BodySizeMode.AUTO) {
+        return data
+      }
+      const { instance, offsets } = data
+      const { reference, popper } = instance;
+      const referenceWidth = instance.reference.clientWidth
+      if(mode === BodySizeMode.AT_LEAST_TRIGGER) {
+        popper.style.minWidth = referenceWidth + "px";
+        return data
+      }
+
+      if(mode === BodySizeMode.EQUALS_TRIGGER) {
+        const delta = referenceWidth - offsets.popper.width
+        popper.style.width = referenceWidth + "px"
+        offsets.popper.width = referenceWidth
+        offsets.popper.left = offsets.popper.left - (0.5 * delta)
+        return data
+      }
+      return data
+    },
+    modifier_updateState(data) {
       const rawOutOfBoundaries = data.attributes["x-out-of-boundaries"];
       const isOutOfBoundaries = rawOutOfBoundaries === true || rawOutOfBoundaries === "" || rawOutOfBoundaries === "true";
       this.outOfBoundaries_ = isOutOfBoundaries;
@@ -249,9 +283,12 @@ export default {
       if (this.visible_ && this.popperInstance == null) {
         this.updatePopperInstance()
       }
-      this.$nextTick(() => {
-        this.scheduleUpdate();
-      })
+      // newVisible ? this.popperInstance.show() : this.popperInstance.hide();
+      const that = this;
+      setTimeout(() => that.scheduleUpdate(), 50);
+      // this.$nextTick(() => {
+      //   this.scheduleUpdate();
+      // })
     },
     show() {
       this.setVisible(true)

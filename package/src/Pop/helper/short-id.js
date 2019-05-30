@@ -1,7 +1,7 @@
 export default () => {
   let text = ""
   const possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    "abcdefghijklmnopqrstuvwxyz"
   for (let i = 0; i < 5; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length))
   }
