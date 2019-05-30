@@ -11,9 +11,11 @@
     </k-pop-trigger>
     <no-ssr>
       <portal :selector="portalSelector">
-        <div ref="body"
-        :aria-hidden="String(!visible_)"
-        :class="bodyClasses" :style="bodyStyles"
+        <div
+          ref="body"
+          :aria-hidden="String(!visible_)"
+          :class="bodyClasses"
+          :style="bodyStyles"
         >
           <slot v-bind="slotProps" />
           <vp-arrow
@@ -51,19 +53,8 @@ const isBrowser = typeof window !== "undefined" && typeof document !== undefined
 import { isValidBoundary, defaultBoundary } from "./boundary"
 import * as BodySizeMode from "./body-size-mode"
 
-// const SIZE_MODE_AUTO = "auto"
-// const SIZE_MODE_EQUALS_TRIGGER = "equal-trigger"
-// const SIZE_MODE_AT_LEAST_TRIGGER = "at-least-trigger"
-
-// const SizeModes = [
-//   SIZE_MODE_AUTO, // default
-//   SIZE_MODE_EQUALS_TRIGGER,
-//   SIZE_MODE_AT_LEAST_TRIGGER,
-// ]
-
-const isSizeMode = value => SizeModes.indexOf(value) >= 0
-
 export default {
+  // eslint-disable-next-line vue/name-property-casing
   name: "k-pop",
   components: {
     KPopTrigger,
@@ -72,7 +63,7 @@ export default {
     VpArrow: { render: h => h("span") }
   },
   props: {
-    portalId: { default: () => `k-pop-portal-container`, type: String },
+    portalId: { default: () => "k-pop-portal-container", type: String },
     offset: { type: Number, default: 0 },
     adjustsBodyWidth: { type: Boolean, default: false },
     adjustsVisibility: { type: Boolean, default: true },
@@ -148,7 +139,8 @@ export default {
       }
 
       if(this.theme == null && this.adjustsVisibility) {
-        result.display = (this.visible_ && this.outOfBoundaries_ === false) ? "block" : "none"
+        // We cannot adjust "display" because this will result in the popover body jumping around.
+        result.visibility = (this.visible_ && this.outOfBoundaries_ === false) ? "visible" : "hidden"
       }
       return result
     },
@@ -218,15 +210,15 @@ export default {
   },
   methods: {
     modifier_bodySizeMode(data) {
-      const mode = this.bodySizeMode_;
+      const mode = this.bodySizeMode_
       if(mode === BodySizeMode.AUTO) {
         return data
       }
       const { instance, offsets } = data
-      const { reference, popper } = instance;
+      const { reference, popper } = instance
       const referenceWidth = instance.reference.clientWidth
       if(mode === BodySizeMode.AT_LEAST_TRIGGER) {
-        popper.style.minWidth = referenceWidth + "px";
+        popper.style.minWidth = referenceWidth + "px"
         return data
       }
 
@@ -240,9 +232,9 @@ export default {
       return data
     },
     modifier_updateState(data) {
-      const rawOutOfBoundaries = data.attributes["x-out-of-boundaries"];
-      const isOutOfBoundaries = rawOutOfBoundaries === true || rawOutOfBoundaries === "" || rawOutOfBoundaries === "true";
-      this.outOfBoundaries_ = isOutOfBoundaries;
+      const rawOutOfBoundaries = data.attributes["x-out-of-boundaries"]
+      const isOutOfBoundaries = rawOutOfBoundaries === true || rawOutOfBoundaries === "" || rawOutOfBoundaries === "true"
+      this.outOfBoundaries_ = isOutOfBoundaries
       return data
     },
     handleClickOnTrigger() {
@@ -283,12 +275,7 @@ export default {
       if (this.visible_ && this.popperInstance == null) {
         this.updatePopperInstance()
       }
-      // newVisible ? this.popperInstance.show() : this.popperInstance.hide();
-      const that = this;
-      setTimeout(() => that.scheduleUpdate(), 50);
-      // this.$nextTick(() => {
-      //   this.scheduleUpdate();
-      // })
+      setTimeout(this.scheduleUpdate)
     },
     show() {
       this.setVisible(true)

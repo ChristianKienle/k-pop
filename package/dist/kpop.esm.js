@@ -1,7 +1,7 @@
 
 /**
  * k-pop
- * version: 0.6.0,
+ * version: 0.6.1,
  * (c) Christian Kienle, 2019
  * LICENCE: MIT
  * http://github.com/christiankienle/k-pop
@@ -183,8 +183,8 @@ var KPopTrigger = {
 
 var maxSafeInt = Math.pow(2, 53) - 1;
 var isBrowser = typeof window !== "undefined" && (typeof document === "undefined" ? "undefined" : _typeof(document)) !== undefined;
-
 var script = {
+  // eslint-disable-next-line vue/name-property-casing
   name: "k-pop",
   components: {
     KPopTrigger: KPopTrigger,
@@ -319,7 +319,8 @@ var script = {
       };
 
       if (this.theme == null && this.adjustsVisibility) {
-        result.display = this.visible_ && this.outOfBoundaries_ === false ? "block" : "none";
+        // We cannot adjust "display" because this will result in the popover body jumping around.
+        result.visibility = this.visible_ && this.outOfBoundaries_ === false ? "visible" : "hidden";
       }
 
       return result;
@@ -471,15 +472,9 @@ var script = {
 
       if (this.visible_ && this.popperInstance == null) {
         this.updatePopperInstance();
-      } // newVisible ? this.popperInstance.show() : this.popperInstance.hide();
+      }
 
-
-      var that = this;
-      setTimeout(function () {
-        return that.scheduleUpdate();
-      }, 50); // this.$nextTick(() => {
-      //   this.scheduleUpdate();
-      // })
+      setTimeout(this.scheduleUpdate);
     },
     show: function show() {
       this.setVisible(true);
