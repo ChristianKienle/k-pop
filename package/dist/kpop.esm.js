@@ -197,6 +197,10 @@ var script = {
     }
   },
   props: {
+    bodyStyles: {
+      type: Object,
+      default: function _default() {}
+    },
     portalId: {
       default: function _default() {
         return "k-pop-portal-container";
@@ -313,10 +317,10 @@ var script = {
           arrowClass = this.arrowClass;
       return _classes([arrowClass, theme ? "kpop-arrow" : null]);
     },
-    bodyStyles: function bodyStyles() {
-      var result = {
+    bodyStyles_: function bodyStyles_() {
+      var result = _objectSpread({}, this.bodyStyles, {
         zIndex: this.defaultBodyZIndex
-      };
+      });
 
       if (this.theme == null && this.adjustsVisibility) {
         // We cannot adjust "display" because this will result in the popover body jumping around.
@@ -513,7 +517,7 @@ var __vue_render__ = function __vue_render__() {
   }, [_c('div', {
     ref: "body",
     class: _vm.bodyClasses,
-    style: _vm.bodyStyles,
+    style: _vm.bodyStyles_,
     attrs: {
       "aria-hidden": String(!_vm.visible_)
     }

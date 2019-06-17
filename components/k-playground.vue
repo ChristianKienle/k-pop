@@ -14,13 +14,14 @@
               :style="triggerStyle"
               :native="useNativeButton"
               @click="toggle"
-            >Show Popover</k-btn>
+              >Show Popover</k-btn
+            >
           </template>
-            <div class="title">Sample Popover Title</div>
-            <div class="body">
-              <p>Not like the brazen giant of Greek fame,</p>
-              <p>With conquering limbs astride from land to land.</p>
-            </div>
+          <div class="title">Sample Popover Title</div>
+          <div class="body">
+            <p>Not like the brazen giant of Greek fame,</p>
+            <p>With conquering limbs astride from land to land.</p>
+          </div>
         </k-pop>
       </div>
     </div>
@@ -28,8 +29,8 @@
 </template>
 
 <script>
-import KSettings from "./playground/k-settings.vue"
-import KBtn from "./k-btn.vue"
+import KSettings from "./playground/k-settings.vue";
+import KBtn from "./k-btn.vue";
 
 export default {
   name: "playground",
@@ -50,7 +51,7 @@ export default {
     triggerStyle() {
       return {
         width: `${this.triggerWidth}px`
-      }
+      };
     }
   },
   methods: {
@@ -59,15 +60,16 @@ export default {
       const contentView = this.$refs.contentview;
       const estimatedTrigerHeight = 50;
       const y =
-        0.5 * (contentView.clientHeight - scrollView.clientHeight) + estimatedTrigerHeight;
-      const x =
-         0.5 * (contentView.clientWidth - scrollView.clientWidth );
+        0.5 * (contentView.clientHeight - scrollView.clientHeight) +
+        estimatedTrigerHeight;
+      const x = 0.5 * (contentView.clientWidth - scrollView.clientWidth);
       scrollView.scrollTop = y;
       scrollView.scrollLeft = x;
     }
   },
   mounted() {
-    setTimeout(this.scrollTriggerIntoView, 500);
+    this.$forceUpdate();
+    requestAnimationFrame(this.scrollTriggerIntoView);
   }
 };
 </script>

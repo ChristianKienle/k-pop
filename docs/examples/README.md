@@ -58,3 +58,17 @@ By setting the `body-size-mode`-prop to `equal-trigger` you tell {{ $page.lib }}
 ::: example body-size-mode--equal-trigger
 <<< @/components/demo/body-size-mode--equal-trigger.vue
 :::
+
+## Scrollable Popover Body
+
+If you have a popover with a (potentially) large body then you might want to make it scrollable. You do that by setting custom styles on the popover's body that constraint it's size and adjust it's overflow settings.
+
+`body-styles` can be used to do just that.
+
+::: warning IMPORTANT
+It is probably a good idea to also disable flipping by setting `flips` to `false`.
+:::
+
+::: example scrollable-body
+<<< @/components/demo/scrollable-body.vue
+:::

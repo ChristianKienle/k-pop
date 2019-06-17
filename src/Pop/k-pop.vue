@@ -15,7 +15,7 @@
           ref="body"
           :aria-hidden="String(!visible_)"
           :class="bodyClasses"
-          :style="bodyStyles"
+          :style="bodyStyles_"
         >
           <slot v-bind="slotProps" />
           <vp-arrow
@@ -63,6 +63,10 @@ export default {
     VpArrow: { render: h => h("span") }
   },
   props: {
+    bodyStyles: {
+      type: Object,
+      default: () => {}
+    },
     portalId: { default: () => "k-pop-portal-container", type: String },
     offset: { type: Number, default: 0 },
     adjustsBodyWidth: { type: Boolean, default: false },
@@ -133,8 +137,9 @@ export default {
       const { theme, arrowClass } = this
       return normalizedClasses([arrowClass, theme ? "kpop-arrow" : null])
     },
-    bodyStyles() {
+    bodyStyles_() {
       const result = {
+        ...this.bodyStyles,
         zIndex: this.defaultBodyZIndex
       }
 

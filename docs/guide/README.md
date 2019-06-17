@@ -4,21 +4,17 @@ sidebar: auto
 title: Guide
 ---
 
-[![npm version](https://badge.fury.io/js/%40ckienle%2Fk-pop.svg)](https://badge.fury.io/js/%40ckienle%2Fk-pop)
-[![Minified Size](https://badgen.net/bundlephobia/min/@ckienle/k-pop)](https://bundlephobia.com/result?p=@ckienle/k-pop)
-[![Minzipped Size](https://badgen.net/bundlephobia/minzip/@ckienle/k-pop)](https://bundlephobia.com/result?p=@ckienle/k-pop)
-[![Build Status](https://travis-ci.org/ChristianKienle/k-pop.svg?branch=master)](https://travis-ci.org/ChristianKienle/k-pop)
-
 # {{ $page.lib }}
 
-{{ $page.lib }} is a simple, yet powerful, popover component for [Vue](https://vuejs.org).
+<a href="https://badge.fury.io/js/%40ckienle%2Fk-pop">
+  <img src="https://badge.fury.io/js/%40ckienle%2Fk-pop.svg" alt="npm Version">
+</a>
 
-::: tip
-**Current Version:**
-<div style="margin-bottom: 10px;">
-<Badge vertical="top" :text="$page.libVersion"/>
-</div>
-:::
+<a href="https://travis-ci.org/ChristianKienle/k-pop">
+  <img src="https://travis-ci.org/ChristianKienle/k-pop.svg?branch=master" alt="Build Status">
+</a>
+
+**{{ $page.lib }} is a simple, yet powerful, popover component for [Vue](https://vuejs.org).**
 
 ## Getting Started
 
